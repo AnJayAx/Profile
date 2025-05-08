@@ -1042,3 +1042,43 @@ body {
     transform: translateY(-2px);
     transition: all 0.2s ease;
 }
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: #0d0d0d;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #0d0d0d;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #063e31;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #10a37f;
+    box-shadow: 0 0 5px rgba(16, 163, 127, 0.5);
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #063e31 #0d0d0d;
+}
+
+/* Prevent ugly scrollbars from appearing in specific elements */
+.chat-content-container {
+    scrollbar-gutter: stable;
+}
+
+/* Ensure specific scrollable areas have visible scrollbars */
+.chat-content-container:hover::-webkit-scrollbar-thumb,
+.sidebar-content:hover::-webkit-scrollbar-thumb {
+    background-color: #063e31;
+}
