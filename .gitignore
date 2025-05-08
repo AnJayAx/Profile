@@ -1,0 +1,10 @@
+.env
+.env.local
+.DS_Store
+bootstrap/
+node_modules/
+.vscode/
+__pycache__/
+venv/
+env/
+.venv/
