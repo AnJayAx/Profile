@@ -29,6 +29,56 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update cursor position on resize
     window.addEventListener('resize', updateCursorTarget);
     
+    // After the main content is displayed, start the message sequence
+    function startMessageSequence() {
+        const messages = document.querySelectorAll('[data-message-index]');
+        
+        // Initially hide ALL messages
+        messages.forEach(msg => {
+            msg.classList.add('hidden');
+        });
+        
+        // Sequential appearance of messages
+        // First show the user message with animation
+        setTimeout(() => {
+            const userMessage = document.querySelector('[data-message-index="0"]');
+            if (userMessage) {
+                userMessage.classList.remove('hidden');
+                userMessage.classList.add('animate-fadeIn');
+                
+                // After user message appears, show the intro message (swapped position)
+                setTimeout(() => {
+                    const introMessage = document.querySelector('[data-message-index="2"]');
+                    if (introMessage) {
+                        introMessage.classList.remove('hidden');
+                        introMessage.classList.add('animate-fadeIn');
+                        
+                        // Then show the thinking message
+                        setTimeout(() => {
+                            const thinkingMessage = document.querySelector('[data-message-index="1"]');
+                            if (thinkingMessage) {
+                                thinkingMessage.classList.remove('hidden');
+                                thinkingMessage.classList.add('animate-pulse');
+                                
+                                // Finally show the detailed profile message
+                                setTimeout(() => {
+                                    // Hide the thinking message
+                                    thinkingMessage.classList.add('hidden');
+                                    
+                                    const profileMessage = document.querySelector('[data-message-index="3"]');
+                                    if (profileMessage) {
+                                        profileMessage.classList.remove('hidden');
+                                        profileMessage.classList.add('animate-fadeIn');
+                                    }
+                                }, 2000); // Show profile after thinking for 2 seconds
+                            }
+                        }, 1500); // Show thinking after intro
+                    }
+                }, 1500); // Show intro after user message
+            }
+        }, 800); // Initial delay before animation starts
+    }
+    
     // Initialize cursor position
     setTimeout(() => {
         updateCursorTarget();
@@ -82,6 +132,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                     
                                     // Hide the loading spinner
                                     appWindow.querySelector('.loading-indicator').style.display = 'none';
+                                    
+                                    // Start message sequence after content appears
+                                    setTimeout(startMessageSequence, 500);
                                 }, 100);
                             }, 100);
                         }, 500); // Wait for the size transition to complete
