@@ -29,6 +29,101 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update cursor position on resize
     window.addEventListener('resize', updateCursorTarget);
     
+    // Add TextScramble class for "About Me" animation
+    class TextScramble {
+      constructor(el) {
+        this.el = el;
+        this.chars = '!<>-_\\/[]{}—=+*^?#________';
+        this.update = this.update.bind(this);
+      }
+      
+      setText(newText) {
+        const oldText = this.el.innerText;
+        const length = Math.max(oldText.length, newText.length);
+        const promise = new Promise((resolve) => this.resolve = resolve);
+        this.queue = [];
+        for (let i = 0; i < length; i++) {
+          const from = oldText[i] || '';
+          const to = newText[i] || '';
+          const start = Math.floor(Math.random() * 40);
+          const end = start + Math.floor(Math.random() * 40);
+          this.queue.push({ from, to, start, end });
+        }
+        cancelAnimationFrame(this.frameRequest);
+        this.frame = 0;
+        this.update();
+        return promise;
+      }
+      
+      update() {
+        let output = '';
+        let complete = 0;
+        for (let i = 0, n = this.queue.length; i < n; i++) {
+          let { from, to, start, end, char } = this.queue[i];
+          if (this.frame >= end) {
+            complete++;
+            output += to;
+          } else if (this.frame >= start) {
+            if (!char || Math.random() < 0.28) {
+              char = this.randomChar();
+              this.queue[i].char = char;
+            }
+            output += `<span class="dud">${char}</span>`;
+          } else {
+            output += from;
+          }
+        }
+        this.el.innerHTML = output;
+        if (complete === this.queue.length) {
+          this.resolve();
+        } else {
+          this.frameRequest = requestAnimationFrame(this.update);
+          this.frame++;
+        }
+      }
+      
+      randomChar() {
+        return this.chars[Math.floor(Math.random() * this.chars.length)];
+      }
+    }
+    
+    // Typing animation function
+    function typeAnimation(element, speed = 30) {
+        const text = element.getAttribute('data-text');
+        element.classList.add('typing');
+        element.textContent = '';
+        
+        let i = 0;
+        const timer = setInterval(() => {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(timer);
+                element.classList.remove('typing');
+                // After typing is complete, show the next message
+                setTimeout(() => {
+                    const profileMessage = document.querySelector('[data-message-index="3"]');
+                    if (profileMessage) {
+                        profileMessage.classList.remove('hidden');
+                        profileMessage.classList.add('animate-fadeIn');
+                    }
+                }, 500); // Small delay before showing the detailed profile
+            }
+        }, speed);
+        
+        return timer; // Return timer to potentially clear it later
+    }
+    
+    // Initialize text scramble after main content is loaded
+    function initTextScramble() {
+        const el = document.querySelector('.text-scramble');
+        if (el) {
+            const fx = new TextScramble(el);
+            fx.setText(el.getAttribute('data-text'));
+        }
+    }
+    
     // After the main content is displayed, start the message sequence
     function startMessageSequence() {
         const messages = document.querySelectorAll('[data-message-index]');
@@ -38,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
             msg.classList.add('hidden');
         });
         
+        // Run text scramble first
+        initTextScramble();
+        
         // Sequential appearance of messages
         // First show the user message with animation
         setTimeout(() => {
@@ -46,35 +144,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 userMessage.classList.remove('hidden');
                 userMessage.classList.add('animate-fadeIn');
                 
-                // After user message appears, show the intro message (swapped position)
+                // After user message appears, show the thinking message
                 setTimeout(() => {
-                    const introMessage = document.querySelector('[data-message-index="2"]');
-                    if (introMessage) {
-                        introMessage.classList.remove('hidden');
-                        introMessage.classList.add('animate-fadeIn');
+                    const thinkingMessage = document.querySelector('[data-message-index="1"]');
+                    if (thinkingMessage) {
+                        thinkingMessage.classList.remove('hidden');
+                        thinkingMessage.classList.add('animate-pulse');
                         
-                        // Then show the thinking message
+                        // Then hide thinking and show the typing animation for intro message
                         setTimeout(() => {
-                            const thinkingMessage = document.querySelector('[data-message-index="1"]');
-                            if (thinkingMessage) {
-                                thinkingMessage.classList.remove('hidden');
-                                thinkingMessage.classList.add('animate-pulse');
-                                
-                                // Finally show the detailed profile message
-                                setTimeout(() => {
-                                    // Hide the thinking message
-                                    thinkingMessage.classList.add('hidden');
-                                    
-                                    const profileMessage = document.querySelector('[data-message-index="3"]');
-                                    if (profileMessage) {
-                                        profileMessage.classList.remove('hidden');
-                                        profileMessage.classList.add('animate-fadeIn');
-                                    }
-                                }, 2000); // Show profile after thinking for 2 seconds
+                            thinkingMessage.classList.add('hidden');
+                            
+                            const introMessage = document.querySelector('[data-message-index="2"]');
+                            if (introMessage) {
+                                introMessage.classList.remove('hidden');
+                                const typingElement = introMessage.querySelector('.typing-animation');
+                                if (typingElement) {
+                                    // Start typing animation - profile message will be shown when typing completes
+                                    typeAnimation(typingElement);
+                                }
                             }
-                        }, 1500); // Show thinking after intro
+                        }, 2000); // Show typing after thinking
                     }
-                }, 1500); // Show intro after user message
+                }, 1500); // Show thinking after user message
             }
         }, 800); // Initial delay before animation starts
     }
@@ -132,6 +224,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     
                                     // Hide the loading spinner
                                     appWindow.querySelector('.loading-indicator').style.display = 'none';
+
+                                    initTextScramble();
                                     
                                     // Start message sequence after content appears
                                     setTimeout(startMessageSequence, 500);

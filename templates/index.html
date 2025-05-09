@@ -38,14 +38,19 @@
                     <span>File Explorer</span>
                 </div>
                 <div class="desktop-icon" id="profile-gpt">
-                    <i class="fas fa-robot"></i>
+                    <div class="icon-image">
+                        <img src="{{ url_for('static', filename='img/logo/ED_transparent.png') }}" alt="ED Logo">
+                    </div>
                     <span>EdsonGPT</span>
                 </div>
 
             </div>
             <div class="app-window" id="app-window">
                 <div class="window-header">
-                    <div class="window-title">EdsonGPT</div>
+                    <div class="window-title">
+                        <img src="{{ url_for('static', filename='img/logo/ED_transparent.png') }}" alt="ED Logo" class="window-logo">
+                        <span>EdsonGPT</span>
+                    </div>
                     <div class="window-controls">
                         <span class="minimize"></span>
                         <span class="maximize"></span>
@@ -146,7 +151,7 @@
             <!-- Main chat area placeholder -->
             <div class="chat-area">
                 <div class="chat-header">
-                    <div class="">About Me</div>
+                    <div class="text-scramble" data-text="ABOUT ME">ABOUT ME</div>
                 </div>
                 <div class="chat-content-container">
                     <div class="chat-messages-wrapper">
@@ -154,7 +159,7 @@
                             <div class="message user-message hidden" data-message-index="0">Tell me all about you</div>
                             <div class="thinking-message hidden" data-message-index="1">Searching ...</div>
                             <div class="message edson-message hidden" data-message-index="2">
-                                <p>Absolutely! Here's a comprehensive overview of who I am.</p>
+                                <p class="typing-animation" data-text="Absolutely! Here's a comprehensive overview of who I am."></p>
                             </div>
                             <div class="message edson-message hidden" data-message-index="3">
                                 <div class="profile-content">
@@ -164,7 +169,7 @@
                                                 alt="Edson Ng">
                                         </div>
                                         <div class="message-text">
-                                            <h2>Who am I?</h2>
+                                            <h2>Hello!</h2>
                                             My name is <b>Edson Ng</b> and I am an undergraduate in Singapore Institute
                                             of Technology pursuing a
                                             degree in Applied Artificial Intelligence. I am a passionate AI developer
