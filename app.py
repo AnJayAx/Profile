@@ -12,13 +12,15 @@ def home():
 
 @app.route('/projects')
 def projects():
-    # Using layout.html indirectly through projects.html
     return render_template('projects.html', page_title="PROJECTS", active_page="projects")
 
 @app.route('/contact')
 def contact():
-    # Using layout.html indirectly through contact.html
     return render_template('contact.html', page_title="CONTACT", active_page="contact")
+
+@app.route('/caduceus')
+def caduceus():
+    return render_template('caduceus.html', page_title="CADUCEUS", active_page="caduceus")
 
 if __name__ == '__main__':
     app.run(debug=True)

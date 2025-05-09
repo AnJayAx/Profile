@@ -1,0 +1,464 @@
+{% extends "layout.html" %}
+{% block title %}CADUCEUS{% endblock %}
+
+{% block content %}
+<div class="chat-header">
+    <div class="text-scramble" data-text="CADUCEUS">CADUCEUS</div>
+</div>
+<div class="chat-content-container">
+    <div class="chat-messages-wrapper">
+        <div class="chat-messages">
+            <!-- Add an animation of adding a folder -->
+
+            <div class="message user-message hidden" data-message-index="0">Take a look at this project folder, what
+                does it do?</div>
+            <div class="thinking-message hidden" data-message-index="1">Analyzing ...</div>
+            <div class="message edson-message hidden" data-message-index="2">
+                <p class="typing-animation"
+                    data-text="I have analyzed the project folder and it seems to be a healthcare-related project, I will compile a summary of it for you.">
+                </p>
+            </div>
+            <div class="message edson-message wide-content hidden" data-message-index="3">
+                <div class="project-detail-content">
+                    <div class="project-header">
+                        <img src="{{ url_for('static', filename='media/projects/caduceus/caduceus.png') }}"
+                            alt="Caduceus Logo" class="project-logo">
+                        <div class="project-title-area">
+                            <h1>Caduceus</h1>
+                            <p class="project-tagline">AI-Powered Medical Diagnostic Assistant</p>
+                        </div>
+                    </div>
+
+                    <div class="project-overview">
+                        <h2>Project Overview</h2>
+                        <p>This project was a collaborative effort with two talented teammates, Hanif and Samuel,
+                            undertaken during our initial exposure to artificial intelligence in the AI Application
+                            module at Nanyang Polytechnic. We developed Caduceus, an AI-powered platform designed to
+                            streamline healthcare interactions for both patients and doctors. My primary focus was on
+                            building a system to assist doctors in diagnosing patients based on their reported symptoms,
+                            as well as creating an acne recognition tool to help users identify skin conditions.
+                            Recognizing the importance of early diagnosis in medicine, I aimed to develop solutions that
+                            enable healthcare professionals to make timely, well-informed decisions with greater
+                            accuracy.
+                        </p>
+                    </div>
+
+                    <div class="key-features">
+                        <h2>My Key Features</h2>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                                <div class="feature-text">
+                                    <h3>Symptom Analysis</h3>
+                                    <p>Utilizes machine learning to analyze symptoms and suggest potential diagnoses</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-history"></i></div>
+                                <div class="feature-text">
+                                    <h3>Doctor Confirmation</h3>
+                                    <p>Patient sends Acne image to doctor for confirmation with paywall using Paypal</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-notes-medical"></i></div>
+                                <div class="feature-text">
+                                    <h3>Acne recognition</h3>
+                                    <p>Detects the kind of acne with uploaded image</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                                <div class="feature-text">
+                                    <h3>Analytics Dashboard</h3>
+                                    <p>Provides health trends and insights for better patient care</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-stack">
+                        <h2>Technologies Used</h2>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Bootstrap</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                    </div>
+
+                    <div class="project-screenshots">
+                        <h2>Screenshots</h2>
+                        <div class="screenshot-carousel">
+                            <div class="screenshot">
+                                <img src="{{ url_for('static', filename='media/projects/caduceus/symptom_analyzer.gif') }}"
+                                    alt="Symptom Analyzer">
+                                <p class="caption">Symptom Analyzer</p>
+                            </div>
+                            <div class="screenshot">
+                                <img src="{{ url_for('static', filename='media/projects/caduceus/acne_detection.gif') }}"
+                                    alt="Acne Detection">
+                                <p class="caption">Acne Detection</p>
+                            </div>
+                            <div class="screenshot">
+                                <img src="{{ url_for('static', filename='media/projects/caduceus/paypal_paywall_verification.gif') }}"
+                                    alt="Verification Paywall">
+                                <p class="caption">Verification paywall with Paypal</p>
+                            </div>
+                            <div class="screenshot">
+                                <img src="{{ url_for('static', filename='media/projects/caduceus/symptom_analyzer_dashboard.png') }}"
+                                    alt="Symptom Analyzer Dashboard">
+                                <p class="caption">Symptom Analyzer dashboard</p>
+                            </div>
+                            <div class="screenshot">
+                                <img src="{{ url_for('static', filename='media/projects/caduceus/symptom_analyzer_records.png') }}"
+                                    alt="Patient Record">
+                                <p class="caption">Patient record view</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="message user-message hidden" data-message-index="4">Oh! Can I try out the AI features?</div>
+            <div class="message edson-message wide-content hidden" data-message-index="5">
+                <div class="caduceus-demo">
+                    <h2>Symptom Checker Demo</h2>
+                    <p>Select symptoms from the list below to receive a preliminary diagnosis. This is a simplified
+                        demonstration of the Caduceus AI system.</p>
+
+                    <div class="symptom-checker-container">
+                        <div class="symptom-selector">
+                            <h3>Symptoms</h3>
+                            <div class="search-box">
+                                <input type="text" id="symptom-search" placeholder="Search symptoms...">
+                                <i class="fas fa-search search-icon"></i>
+                            </div>
+                            <div class="symptom-list">
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="fever" class="symptom-checkbox">
+                                    <label for="fever">Fever</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="cough" class="symptom-checkbox">
+                                    <label for="cough">Cough</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="headache" class="symptom-checkbox">
+                                    <label for="headache">Headache</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="fatigue" class="symptom-checkbox">
+                                    <label for="fatigue">Fatigue</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="nausea" class="symptom-checkbox">
+                                    <label for="nausea">Nausea</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="sore-throat" class="symptom-checkbox">
+                                    <label for="sore-throat">Sore Throat</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="shortness-of-breath" class="symptom-checkbox">
+                                    <label for="shortness-of-breath">Shortness of Breath</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="body-ache" class="symptom-checkbox">
+                                    <label for="body-ache">Body Ache</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="chills" class="symptom-checkbox">
+                                    <label for="chills">Chills</label>
+                                </div>
+                                <div class="symptom-item">
+                                    <input type="checkbox" id="loss-of-taste" class="symptom-checkbox">
+                                    <label for="loss-of-taste">Loss of Taste</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="diagnosis-area">
+                            <button class="diagnose-btn" id="diagnose-btn">Get Diagnosis</button>
+
+                            <div class="results-panel hidden" id="results-panel">
+                                <h3>Possible Conditions</h3>
+                                <div class="diagnosis-results">
+                                    <div class="diagnosis-item">
+                                        <div class="condition-name">Common Cold</div>
+                                        <div class="probability-bar">
+                                            <div class="probability-fill" style="width: 75%"></div>
+                                            <span class="probability-percentage">75%</span>
+                                        </div>
+                                    </div>
+                                    <div class="diagnosis-item">
+                                        <div class="condition-name">Influenza</div>
+                                        <div class="probability-bar">
+                                            <div class="probability-fill" style="width: 60%"></div>
+                                            <span class="probability-percentage">60%</span>
+                                        </div>
+                                    </div>
+                                    <div class="diagnosis-item">
+                                        <div class="condition-name">COVID-19</div>
+                                        <div class="probability-bar">
+                                            <div class="probability-fill" style="width: 45%"></div>
+                                            <span class="probability-percentage">45%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="disclaimer">
+                                    <p><strong>Disclaimer:</strong> This is a demonstration only. Always consult with a
+                                        healthcare professional for proper medical diagnosis and treatment.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="caduceus-demo">
+                    <h2>Acne Recognition Demo</h2>
+                    <p>Upload an image of skin with acne to get an AI-powered assessment of the acne type. This is a simplified demonstration of the Caduceus Acne Detection system.</p>
+                    
+                    <div class="acne-recognition-container">
+                        <div class="image-upload-area">
+                            <h3>Upload Image</h3>
+                            <div class="upload-box" id="upload-box">
+                                <div class="upload-placeholder" id="upload-placeholder">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Click or drag an image here to upload</p>
+                                    <p class="upload-hint">Supported formats: JPG, PNG</p>
+                                </div>
+                                <img id="preview-image" class="preview-image hidden" alt="Acne image preview">
+                                <input type="file" id="acne-image-upload" class="file-input" accept="image/jpeg, image/png">
+                            </div>
+                            <button class="analyze-btn" id="analyze-btn" disabled>Analyze Image</button>
+                        </div>
+                        
+                        <div class="acne-results-area">
+                            <div class="analyzing-indicator hidden" id="analyzing-indicator">
+                                <div class="analyzing-spinner"></div>
+                                <p>Analyzing image...</p>
+                            </div>
+                            
+                            <div class="results-panel hidden" id="acne-results-panel">
+                                <h3>Acne Assessment</h3>
+                                <div class="acne-results">
+                                    <div class="acne-type-result">
+                                        <h4>Detected Acne Type:</h4>
+                                        <div class="acne-type">Papules & Pustules</div>
+                                    </div>
+                                    
+                                    <div class="acne-severity">
+                                        <h4>Severity:</h4>
+                                        <div class="severity-indicator">
+                                            <div class="severity-level moderate">Moderate</div>
+                                            <div class="severity-scale">
+                                                <span class="scale-dot active"></span>
+                                                <span class="scale-dot active"></span>
+                                                <span class="scale-dot active"></span>
+                                                <span class="scale-dot"></span>
+                                                <span class="scale-dot"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="acne-recommendations">
+                                        <h4>Recommendations:</h4>
+                                        <ul>
+                                            <li>Use benzoyl peroxide topical treatments</li>
+                                            <li>Avoid touching or picking at affected areas</li>
+                                            <li>Consider consulting a dermatologist for prescription options</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="disclaimer">
+                                    <p><strong>Disclaimer:</strong> This is a demonstration only. Always consult with a healthcare professional for proper diagnosis and treatment of skin conditions.</p>
+                                </div>
+                                
+                                <button class="reset-btn" id="reset-acne-scan">New Scan</button>
+                            </div>
+                            
+                            <div class="empty-state-message" id="empty-state-message">
+                                <div class="empty-state-icon">
+                                    <i class="fas fa-camera-retro"></i>
+                                </div>
+                                <p>Upload an image and click "Analyze Image" to see results here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Symptom checker functionality
+        const diagnoseBtn = document.getElementById('diagnose-btn');
+        const resultsPanel = document.getElementById('results-panel');
+
+        if (diagnoseBtn) {
+            diagnoseBtn.addEventListener('click', function () {
+                resultsPanel.classList.remove('hidden');
+
+                // Simple animation for the probability bars
+                const probabilityFills = document.querySelectorAll('.probability-fill');
+                probabilityFills.forEach(fill => {
+                    const width = fill.style.width;
+                    fill.style.width = '0';
+                    setTimeout(() => {
+                        fill.style.transition = 'width 1s ease-in-out';
+                        fill.style.width = width;
+                    }, 100);
+                });
+            });
+        }
+
+        // Symptom search functionality
+        const symptomSearch = document.getElementById('symptom-search');
+        const symptomItems = document.querySelectorAll('.symptom-item');
+
+        if (symptomSearch) {
+            symptomSearch.addEventListener('input', function () {
+                const searchTerm = this.value.toLowerCase();
+
+                symptomItems.forEach(item => {
+                    const symptomText = item.querySelector('label').textContent.toLowerCase();
+                    if (symptomText.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Acne recognition functionality
+        const uploadBox = document.getElementById('upload-box');
+        const acneImageUpload = document.getElementById('acne-image-upload');
+        const previewImage = document.getElementById('preview-image');
+        const uploadPlaceholder = document.getElementById('upload-placeholder');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const acneResultsPanel = document.getElementById('acne-results-panel');
+        const analyzingIndicator = document.getElementById('analyzing-indicator');
+        const resetAcneScan = document.getElementById('reset-acne-scan');
+        const emptyStateMessage = document.getElementById('empty-state-message');
+        
+        if (uploadBox) {
+            uploadBox.addEventListener('click', function() {
+                acneImageUpload.click();
+            });
+            
+            uploadBox.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadBox.classList.add('drag-over');
+            });
+            
+            uploadBox.addEventListener('dragleave', function() {
+                uploadBox.classList.remove('drag-over');
+            });
+            
+            uploadBox.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadBox.classList.remove('drag-over');
+                if (e.dataTransfer.files.length) {
+                    handleImageFile(e.dataTransfer.files[0]);
+                }
+            });
+            
+            acneImageUpload.addEventListener('change', function() {
+                if (this.files.length) {
+                    handleImageFile(this.files[0]);
+                }
+            });
+            
+            analyzeBtn.addEventListener('click', function() {
+                // Hide empty state message
+                emptyStateMessage.style.display = 'none';
+                
+                // Show analyzing indicator
+                analyzingIndicator.style.display = 'flex';
+                analyzingIndicator.classList.remove('hidden');
+                
+                // Simulate analysis delay
+                setTimeout(function() {
+                    // Hide analyzing indicator
+                    analyzingIndicator.style.display = 'none';
+                    analyzingIndicator.classList.add('hidden');
+                    
+                    // Show results
+                    acneResultsPanel.style.display = 'block';
+                    acneResultsPanel.classList.remove('hidden');
+                }, 2000);
+            });
+            
+            resetAcneScan.addEventListener('click', function() {
+                // Reset the upload and results
+                previewImage.classList.add('hidden');
+                previewImage.style.display = 'none';
+                uploadPlaceholder.classList.remove('hidden');
+                uploadPlaceholder.style.display = 'flex';
+                acneResultsPanel.classList.add('hidden');
+                acneResultsPanel.style.display = 'none';
+                analyzeBtn.disabled = true;
+                acneImageUpload.value = '';
+                
+                // Show empty state message again
+                emptyStateMessage.style.display = 'flex';
+                
+                // Ensure analyzing indicator is hidden
+                analyzingIndicator.classList.add('hidden');
+                analyzingIndicator.style.display = 'none';
+            });
+            
+            function handleImageFile(file) {
+                if (file.type.match('image/jpeg') || file.type.match('image/png')) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                        previewImage.classList.remove('hidden');
+                        uploadPlaceholder.style.display = 'none';
+                        uploadPlaceholder.classList.add('hidden');
+                        analyzeBtn.disabled = false;
+                        
+                        // Make sure results and analyzing indicator are hidden
+                        acneResultsPanel.style.display = 'none';
+                        acneResultsPanel.classList.add('hidden');
+                        analyzingIndicator.style.display = 'none';
+                        analyzingIndicator.classList.add('hidden');
+                        emptyStateMessage.style.display = 'flex';
+                    };
+                    
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('Please upload a JPG or PNG image.');
+                }
+            }
+        }
+        
+        // Make sure the states are properly initialized on page load
+        if (emptyStateMessage) {
+            // Explicitly set styles on page load
+            emptyStateMessage.style.display = 'flex';
+            analyzingIndicator.style.display = 'none';
+            acneResultsPanel.style.display = 'none';
+            
+            // Ensure preview image is properly hidden initially
+            if (previewImage) {
+                previewImage.style.display = 'none';
+            }
+            
+            // Ensure upload placeholder is shown initially
+            if (uploadPlaceholder) {
+                uploadPlaceholder.style.display = 'flex';
+            }
+        }
+    });
+</script>
+{% endblock %}
