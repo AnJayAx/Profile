@@ -1,252 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}WELCOME{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="keyword"
-        content="resume, cv, portfolio, vcard, responsive, retina, jquery, css3, tailwindcss, material CV, creative, designer, developer, online cv, online resume, powerful portfolio, professional, landing page">
-    <meta name="description" content="Edson Ng Website">
-    <meta name="author" content="Edson">
-
-    <title>{% block title %}Edson{% endblock %}</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo/ED.png') }}" sizes="any">
-
-    <!-- Add Roboto Flex font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-
-<body class="bg-black text-white">
-    <div class="preloader" id="preloader">
-        <!-- Add cursor element -->
-        <div class="custom-cursor" id="custom-cursor"></div>
-        <div class="desktop">
-            <div class="desktop-icons">
-                <div class="desktop-icon" id="trash-bin">
-                    <i class="fas fa-trash"></i>
-                    <span>Recycle Bin</span>
-                </div>
-                <div class="desktop-icon" id="file-explorer">
-                    <i class="fas fa-folder"></i>
-                    <span>File Explorer</span>
-                </div>
-                <div class="desktop-icon" id="profile-gpt">
-                    <div class="icon-image">
-                        <img src="{{ url_for('static', filename='img/logo/ED_transparent.png') }}" alt="ED Logo">
-                    </div>
-                    <span>EdsonGPT</span>
-                </div>
-
+{% block content %}
+<div class="chat-header">
+    <div class="text-scramble" data-text="ABOUT ME">ABOUT ME</div>
+</div>
+<div class="chat-content-container">
+    <div class="chat-messages-wrapper">
+        <div class="chat-messages">
+            <div class="message user-message hidden" data-message-index="0">Tell me all about you</div>
+            <div class="thinking-message hidden" data-message-index="1">Searching ...</div>
+            <div class="message edson-message hidden" data-message-index="2">
+                <p class="typing-animation" data-text="Absolutely! Here's a comprehensive overview of who I am."></p>
             </div>
-            <div class="app-window" id="app-window">
-                <div class="window-header">
-                    <div class="window-title">
-                        <img src="{{ url_for('static', filename='img/logo/ED_transparent.png') }}" alt="ED Logo" class="window-logo">
-                        <span>EdsonGPT</span>
-                    </div>
-                    <div class="window-controls">
-                        <span class="minimize"></span>
-                        <span class="maximize"></span>
-                        <span class="close"></span>
-                    </div>
-                </div>
-                <div class="window-content">
-                    <div class="loading-indicator">
-                        <div class="spinner"></div>
-                        <p>Loading EdsonGPT...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="main-content" style="display: none;">
-        <div class="chat-container flex transition-all duration-300">
-            <!-- Sidebar with collapsible functionality -->
-            <div id="sidebar" class="sidebar transition-all duration-300">
-                <div class="sidebar-header">
-                    <div class="sidebar-controls">
-                        <!-- Theme toggle button -->
-                        <button class="control-btn theme-toggle-btn" title="Toggle dark/light mode">
-                            <i class="fas fa-moon"></i>
-                        </button>
-
-                        <!-- Font size selector dropdown -->
-                        <div class="font-size-dropdown">
-                            <button class="control-btn font-size-btn" title="Change font size">
-                                <i class="fas fa-font"></i>
-                            </button>
+            <div class="message edson-message hidden" data-message-index="3">
+                <div class="profile-content">
+                    <div class="about-me-section">
+                        <div class="profile-image">
+                            <img src="{{ url_for('static', filename='media/profile/top_osaka.png') }}" alt="Edson Ng">
                         </div>
-
-                        <!-- Close sidebar button -->
-                        <button id="close-sidebar-btn" class="control-btn close-sidebar-btn" title="Close sidebar">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
+                        <div class="message-text">
+                            <h2>Hello!</h2>
+                            My name is <b>Edson Ng</b> and I am an undergraduate in Singapore Institute
+                            of Technology pursuing a
+                            degree in Applied Artificial Intelligence. I am a passionate AI developer
+                            with a strong interest in web development. I have experience in various
+                            programming languages and frameworks, and I am always eager to
+                            learn new technologies and improve my skills.
+                        </div>
                     </div>
 
-                </div>
-                <div class="sidebar-content">
-                    <div class="recent-section">
-                        <h3 class="section-title">Today</h3>
-                        <div class="chat-history">
-                            <div class="chat-item active">
-                                <span>Tell me all about you</span>
+                    <div class="skills-section">
+                        <h2>Skills</h2>
+                        <div class="skills-grid">
+                            <div class="skill-item">HTML5</div>
+                            <div class="skill-item">CSS3</div>
+                            <div class="skill-item">JavaScript</div>
+                            <div class="skill-item">Python</div>
+                            <div class="skill-item">Java</div>
+                            <div class="skill-item">C</div>
+                            <div class="skill-item">C#</div>
+                            <div class="skill-item">MySQL</div>
+                            <div class="skill-item">NodeJS</div>
+                            <div class="skill-item">PHP</div>
+                            <div class="skill-item">Bootstrap</div>
+                            <div class="skill-item">TailwindCSS</div>
+                            <div class="skill-item">Git</div>
+                        </div>
+                    </div>
+
+                    <div class="education-section">
+                        <h2>Education</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="year-badge">2024 - 2027</div>
+                                <div class="education-content">
+                                    <h3>Singapore Institute of Technology</h3>
+                                    <p>Bachelor's Degree in Applied Artificial Intelligence</p>
+                                </div>
                             </div>
-                            <div class="chat-item">
-                                <span>Code my project</span>
+                            <div class="timeline-item">
+                                <div class="year-badge">2019 - 2022</div>
+                                <div class="education-content">
+                                    <h3>Nanyang Polytechnic</h3>
+                                    <p>Diploma in Information Technology</p>
+                                </div>
                             </div>
-                            <div class="chat-item">
-                                <span>Answer these questions</span>
+                            <div class="timeline-item">
+                                <div class="year-badge">2015 - 2019</div>
+                                <div class="education-content">
+                                    <h3>Punggol Secondary School</h3>
+                                    <p>GCE 'O' Levels Certificate</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="project-section">
-                        <h3 class="section-title">Projects</h3>
-                        <div class="chat-history">
-                            <div class="chat-item">
-                                <li class="fas fa-folder"></li>
-                                <span>Caduceus</span>
-                            </div>
-                            <div class="chat-item">
-                                <li class="fas fa-folder"></li>
-                                <span>AutoAssess</span>
-                            </div>
-                            <div class="chat-item">
-                                <li class="fas fa-folder"></li>
-                                <span>Gradescope v2</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sidebar-footer">
-                    <div class="sidebar-controls">
-                        <!-- LinkedIn Button -->
-                        <button class="control-btn linkedin-btn" title="LinkedIn">
-                            <a href="https://www.linkedin.com/in/edsonng/" target="_blank">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                        </button>
 
-                        <!-- GitHub Button -->
-                        <button class="control-btn github-btn" title="GitHub">
-                            <a href="https://github.com" target="_blank">
-                                <i class="fab fa-github"></i>
-                            </a>
-                        </button>
-
-                        <!-- Secret Button -->
-                        <button id="secret-btn" class="control-btn secret-btn" title="Secret Mode">
-                            <i class="fas fa-key"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Main chat area placeholder -->
-            <div class="chat-area">
-                <div class="chat-header">
-                    <div class="text-scramble" data-text="ABOUT ME">ABOUT ME</div>
-                </div>
-                <div class="chat-content-container">
-                    <div class="chat-messages-wrapper">
-                        <div class="chat-messages">
-                            <div class="message user-message hidden" data-message-index="0">Tell me all about you</div>
-                            <div class="thinking-message hidden" data-message-index="1">Searching ...</div>
-                            <div class="message edson-message hidden" data-message-index="2">
-                                <p class="typing-animation" data-text="Absolutely! Here's a comprehensive overview of who I am."></p>
+                    <div class="hobbies-section">
+                        <h2>Hobbies</h2>
+                        <div class="hobbies-container">
+                            <div class="hobby-category">
+                                <div class="category-title"><i class="fas fa-running"></i> Sports</div>
+                                <div class="hobby-items">
+                                    <div class="hobby-item">Basketball</div>
+                                    <div class="hobby-item">Badminton</div>
+                                    <div class="hobby-item">Bowling</div>
+                                    <div class="hobby-item">Football</div>
+                                </div>
                             </div>
-                            <div class="message edson-message hidden" data-message-index="3">
-                                <div class="profile-content">
-                                    <div class="about-me-section">
-                                        <div class="profile-image">
-                                            <img src="{{ url_for('static', filename='img/profile/top_osaka.png') }}"
-                                                alt="Edson Ng">
-                                        </div>
-                                        <div class="message-text">
-                                            <h2>Hello!</h2>
-                                            My name is <b>Edson Ng</b> and I am an undergraduate in Singapore Institute
-                                            of Technology pursuing a
-                                            degree in Applied Artificial Intelligence. I am a passionate AI developer
-                                            with a strong interest in web development. I have experience in various
-                                            programming languages and frameworks, and I am always eager to
-                                            learn new technologies and improve my skills.
-                                        </div>
-                                    </div>
-                                    <div class="skills-section">
-                                        <h2>Skills</h2>
-                                        <div class="skills-grid">
-                                            <div class="skill-item">HTML5</div>
-                                            <div class="skill-item">CSS3</div>
-                                            <div class="skill-item">JavaScript</div>
-                                            <div class="skill-item">Python</div>
-                                            <div class="skill-item">Java</div>
-                                            <div class="skill-item">C</div>
-                                            <div class="skill-item">C#</div>
-                                            <div class="skill-item">MySQL</div>
-                                            <div class="skill-item">NodeJS</div>
-                                            <div class="skill-item">PHP</div>
-                                            <div class="skill-item">Bootstrap</div>
-                                            <div class="skill-item">TailwindCSS</div>
-                                            <div class="skill-item">Git</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="education-section">
-                                        <h2>Education</h2>
-                                        <div class="timeline">
-                                            <div class="timeline-item">
-                                                <div class="year-badge">2024 - 2027</div>
-                                                <div class="education-content">
-                                                    <h3>Singapore Institute of Technology</h3>
-                                                    <p>Bachelor's Degree in Applied Artificial Intelligence</p>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-item">
-                                                <div class="year-badge">2019 - 2022</div>
-                                                <div class="education-content">
-                                                    <h3>Nanyang Polytechnic</h3>
-                                                    <p>Diploma in Information Technology</p>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-item">
-                                                <div class="year-badge">2015 - 2019</div>
-                                                <div class="education-content">
-                                                    <h3>Punggol Secondary School</h3>
-                                                    <p>GCE 'O' Levels Certificate</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="hobbies-section">
-                                        <h2>Hobbies</h2>
-                                        <div class="hobbies-container">
-                                            <div class="hobby-category">
-                                                <div class="category-title"><i class="fas fa-running"></i> Sports</div>
-                                                <div class="hobby-items">
-                                                    <div class="hobby-item">Basketball</div>
-                                                    <div class="hobby-item">Badminton</div>
-                                                    <div class="hobby-item">Bowling</div>
-                                                    <div class="hobby-item">Football</div>
-                                                </div>
-                                            </div>
-                                            <div class="hobby-category">
-                                                <div class="category-title"><i class="fas fa-gamepad"></i> Gaming</div>
-                                                <div class="hobby-items">
-                                                    <div class="hobby-item">FPS</div>
-                                                    <div class="hobby-item">RPG</div>
-                                                    <div class="hobby-item">Survival</div>
-                                                    <div class="hobby-item">Racing</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="hobby-category">
+                                <div class="category-title"><i class="fas fa-gamepad"></i> Gaming</div>
+                                <div class="hobby-items">
+                                    <div class="hobby-item">FPS</div>
+                                    <div class="hobby-item">RPG</div>
+                                    <div class="hobby-item">Survival</div>
+                                    <div class="hobby-item">Racing</div>
                                 </div>
                             </div>
                         </div>
@@ -255,8 +103,5 @@
             </div>
         </div>
     </div>
-
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
-
-</html>
+</div>
+{% endblock %}

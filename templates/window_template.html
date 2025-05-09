@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="app-window active fullscreen fullscreen-complete" id="app-window">
+    <div class="window-header">
+        <div class="window-title">
+            <img src="{{ url_for('static', filename='img/logo/ED_transparent.png') }}" alt="ED Logo" class="window-logo">
+            <span>EdsonGPT - {{ page_title }}</span>
+        </div>
+        <div class="window-controls">
+            <span class="minimize"></span>
+            <span class="maximize"></span>
+            <span class="close"></span>
+        </div>
+    </div>
+    <div class="window-content">
+        <div class="main-content" style="display: block; opacity: 1;">
+            <div class="chat-container flex transition-all duration-300">
+                <!-- Sidebar with collapsible functionality -->
+                <div id="sidebar" class="sidebar transition-all duration-300">
+                    <div class="sidebar-header">
+                        <div class="sidebar-controls">
+                            <!-- Theme toggle button -->
+                            <button class="control-btn theme-toggle-btn" title="Toggle dark/light mode">
+                                <i class="fas fa-moon"></i>
+                            </button>
+
+                            <!-- Font size selector dropdown -->
+                            <div class="font-size-dropdown">
+                                <button class="control-btn font-size-btn" title="Change font size">
+                                    <i class="fas fa-font"></i>
+                                </button>
+                            </div>
+
+                            <!-- Close sidebar button -->
+                            <button id="close-sidebar-btn" class="control-btn close-sidebar-btn" title="Close sidebar">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="sidebar-content">
+                        <div class="navigation-section">
+                            <h3 class="section-title">Navigation</h3>
+                            <div class="chat-history">
+                                <a href="/" class="chat-item {% if active_page == 'home' %}active{% endif %}">
+                                    <i class="fas fa-home"></i>
+                                    <span>About Me</span>
+                                </a>
+                                <a href="/projects" class="chat-item {% if active_page == 'projects' %}active{% endif %}">
+                                    <i class="fas fa-code"></i>
+                                    <span>Projects</span>
+                                </a>
+                                <a href="/contact" class="chat-item {% if active_page == 'contact' %}active{% endif %}">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>Contact</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="project-section">
+                            <h3 class="section-title">Projects</h3>
+                            <div class="chat-history">
+                                <div class="chat-item">
+                                    <i class="fas fa-folder"></i>
+                                    <span>Caduceus</span>
+                                </div>
+                                <div class="chat-item">
+                                    <i class="fas fa-folder"></i>
+                                    <span>AutoAssess</span>
+                                </div>
+                                <div class="chat-item">
+                                    <i class="fas fa-folder"></i>
+                                    <span>Gradescope v2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <div class="sidebar-controls">
+                            <!-- LinkedIn Button -->
+                            <button class="control-btn linkedin-btn" title="LinkedIn">
+                                <a href="https://www.linkedin.com/in/edsonng/" target="_blank">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </button>
+
+                            <!-- GitHub Button -->
+                            <button class="control-btn github-btn" title="GitHub">
+                                <a href="https://github.com" target="_blank">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </button>
+
+                            <!-- Secret Button -->
+                            <button id="secret-btn" class="control-btn secret-btn" title="Secret Mode">
+                                <i class="fas fa-key"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main content area -->
+                <div class="chat-area">
+                    <div class="chat-header">
+                        <div class="text-scramble" data-text="{{ page_title }}">{{ page_title }}</div>
+                    </div>
+                    <div class="chat-content-container">
+                        <div class="chat-messages-wrapper">
+                            {% block window_content %}
+                            <!-- Content will be injected here -->
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

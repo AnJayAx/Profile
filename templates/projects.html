@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+{% block title %}PROJECTS{% endblock %}
+
+{% block content %}
+<div class="chat-header">
+    <div class="text-scramble" data-text="PROJECTS">PROJECTS</div>
+</div>
+<div class="chat-content-container">
+    <div class="chat-messages-wrapper">
+        <div class="chat-messages">
+            <div class="message user-message hidden" data-message-index="0">I have a coding assignment, ideate for me
+                and write out all the codes.</div>
+            <div class="message edson-message hidden" data-message-index="1">
+                <p class="typing-animation"
+                    data-text="Sorry, you have to subscribe to the $100,000/mth premium plan for idea generation EdsonGPT-9o. Cannot cancel anytime.">
+                </p>
+            </div>
+            <div class="message user-message hidden" data-message-index="2">... No thanks. How about I provide the idea and you code?</div>
+            <div class="message edson-message hidden" data-message-index="3">
+                <p class="typing-animation"
+                    data-text="Sure! I can help you with that, it will be $80,000/mth basic plan EdsonGPT-o0.01-mini-low, much more affordable than the premium plan!">
+                </p>
+            </div>
+            <div class="message user-message hidden" data-message-index="4">I'm cooked.</div>
+
+            <div class="thinking-message hidden" data-message-index="5">Searching ...</div>
+            <div class="message edson-message hidden" data-message-index="6">
+                <p class="typing-animation"
+                    data-text="No worries, you can still view my past projects for FREE! Each demonstrates different skills and technologies.">
+                </p>
+            </div>
+            <div class="message edson-message hidden" data-message-index="7">
+                <div class="projects-content">
+                    <h2>Featured Projects</h2>
+
+                    <div class="project-item">
+                        <div class="project-image">
+                            <img src="{{ url_for('static', filename='media/projects/caduceus/caduceus_thin.png') }}"
+                                alt="Caduceus Project">
+                        </div>
+                        <div class="project-details">
+                            <h3>Caduceus</h3>
+                            <div class="project-tags">
+                                <span class="project-tag">Healthcare</span>
+                                <span class="project-tag">AI</span>
+                                <span class="project-tag">Machine Learning</span>
+                            </div>
+                            <p class="project-description">
+                                An AI-powered medical diagnostic assistant that helps healthcare providers identify
+                                potential conditions based on symptoms. The system uses advanced machine learning
+                                algorithms to analyze patient data and suggest possible diagnoses.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-item">Python</span>
+                                <span class="tech-item">TensorFlow</span>
+                                <span class="tech-item">Flask</span>
+                                <span class="tech-item">MySQL</span>
+                                <span class="tech-item">HTML, CSS & JS</span>
+                                <span class="tech-item">Bootstrap</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-globe"></i> Live Demo</a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-image">
+                            <img src="{{ url_for('static', filename='media/projects/autoassess/autoassess_thin.png') }}"
+                                alt="AutoAssess Project">
+                        </div>
+                        <div class="project-details">
+                            <h3>AutoAssess</h3>
+                            <div class="project-tags">
+                                <span class="project-tag">Education</span>
+                                <span class="project-tag">ML</span>
+                                <span class="project-tag">Automation</span>
+                            </div>
+                            <p class="project-description">
+                                An automated essay grading system that uses Natural Language Processing to evaluate
+                                student writing. The platform provides instant feedback on structure, grammar, content
+                                relevance, and more.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-item">Python</span>
+                                <span class="tech-item">TensorFlow</span>
+                                <span class="tech-item">Flask</span>
+                                <span class="tech-item">HTML, CSS & JS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-globe"></i> Live Demo</a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <div class="project-image">
+                            <img src="{{ url_for('static', filename='media/projects/gradescopev2/gradescopev2_thin.png') }}"
+                                alt="Gradescope v2 Project">
+                        </div>
+                        <div class="project-details">
+                            <h3>Gradescope v2</h3>
+                            <div class="project-tags">
+                                <span class="project-tag">Education</span>
+                                <span class="project-tag">MNIST</span>
+                                <span class="project-tag">Computer Vision</span>
+                            </div>
+                            <p class="project-description">
+                                A comprehensive learning management system focused on streamlining the grading process
+                                for instructors. Features include automatic grading for various question types,
+                                plagiarism detection, and detailed analytics.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-item">Python</span>
+                                <span class="tech-item">Tensorflow</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-globe"></i> Live Demo</a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="other-projects-heading">Other Projects</h2>
+                    <div class="other-projects">
+                        <div class="mini-project">
+                            <h4>Personal Portfolio</h4>
+                            <p>A responsive website showcasing my projects and skills.</p>
+                            <div class="mini-project-tech">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>JavaScript</span>
+                            </div>
+                        </div>
+
+                        <div class="mini-project">
+                            <h4>Weather App</h4>
+                            <p>Real-time weather data visualization using OpenWeatherMap API.</p>
+                            <div class="mini-project-tech">
+                                <span>React</span>
+                                <span>API</span>
+                                <span>CSS3</span>
+                            </div>
+                        </div>
+
+                        <div class="mini-project">
+                            <h4>Task Manager</h4>
+                            <p>A productivity app with task prioritization and reminders.</p>
+                            <div class="mini-project-tech">
+                                <span>Vue.js</span>
+                                <span>Firebase</span>
+                                <span>Vuex</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

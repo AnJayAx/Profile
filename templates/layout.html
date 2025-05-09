@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="keyword"
+        content="resume, cv, portfolio, vcard, responsive, retina, jquery, css3, tailwindcss, material CV, creative, designer, developer, online cv, online resume, powerful portfolio, professional, landing page">
+    <meta name="description" content="Edson Ng Website">
+    <meta name="author" content="Edson">
+
+    <title>{% block title %}Edson{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='media/logo/ED.png') }}" sizes="any">
+
+    <!-- Add Roboto Flex font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-black text-white non-home-page" data-page="{{ active_page }}">
+    <!-- For non-home pages, directly show app window UI -->
+    <div class="app-window active fullscreen fullscreen-complete" id="app-window">
+        <div class="window-header">
+            <div class="window-title">
+                <img src="{{ url_for('static', filename='media/logo/ED_transparent.png') }}" alt="ED Logo"
+                    class="window-logo">
+                <span>EdsonGPT</span>
+            </div>
+            <div class="window-controls">
+                <span class="minimize"></span>
+                <span class="maximize"></span>
+                <span class="close"></span>
+            </div>
+        </div>
+        <div class="window-content">
+            <div class="main-content no-animation" style="display: block; opacity: 1;">
+                <div class="chat-container flex transition-all duration-300">
+                    <!-- Sidebar with collapsible functionality using the shared include -->
+                    {% include "includes/sidebar.html" %}
+
+                    <!-- Main chat area placeholder -->
+                    <div class="chat-area">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

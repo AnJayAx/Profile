@@ -328,6 +328,32 @@ body {
     transition: none;
 }
 
+/* Styles for app window on non-home pages */
+.app-window.active.fullscreen.fullscreen-complete {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: none;
+    border-radius: 0;
+    z-index: 1000;
+}
+
+.app-window.active.fullscreen.fullscreen-complete .window-content {
+    flex: 1;
+    display: flex;
+    padding: 0;
+    overflow: hidden;
+}
+
+.app-window.active.fullscreen.fullscreen-complete .main-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .window-header {
     display: flex;
     justify-content: space-between;
@@ -547,6 +573,8 @@ body {
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
 .chat-item.active {
@@ -555,6 +583,14 @@ body {
 
 .chat-item:hover:not(.active) {
     background-color: #1a1a1a;
+}
+
+/* Fix for li elements inside chat items */
+.chat-item li, 
+.chat-item i {
+    margin-right: 10px;
+    width: 16px;
+    text-align: center;
 }
 
 .sidebar-footer {
@@ -637,6 +673,8 @@ body {
     border-radius: 8px;
     max-width: 80%;
     word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
@@ -650,8 +688,22 @@ body {
     align-self: flex-start;
     background-color: #2a2a2a; /* Darker background for AI responses */
     color: white;
-    max-width: 90%; /* Allow more width for the profile message */
-    padding: 16px;
+    max-width: 90%; /* Increased from 80% to 90% */
+}
+
+.edson-message p {
+    white-space: normal;
+    word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    border-right: none !important; /* Force no border */
+}
+
+/* Ensure proper text wrapping for long words in edson messages */
+.edson-message .typing-animation {
+    max-width: 100%;
+    display: inline-block;
+    border-right: none !important; /* Force no border */
 }
 
 /* Message animation styles */
@@ -1155,23 +1207,382 @@ body {
     color: #10a37f;
 }
 
-/* Typing animation styles */
+/* Enhanced typing animation styles for proper text wrapping */
 .typing-animation {
     display: inline-block;
     position: relative;
-    white-space: nowrap;
-    border-right: 2px solid transparent;
+    white-space: normal; /* Allow wrapping */
+    width: 100%; /* Ensure it takes full width of parent */
+    word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .typing-animation.typing {
-    overflow: hidden;
     border-right: 2px solid #10a37f;
     animation: blinking-cursor 0.8s step-end infinite;
-    white-space: nowrap;
-    max-width: fit-content;
+}
+
+/* Make sure border is removed when typing is complete */
+.typing-animation:not(.typing) {
+    border-right: none !important;
 }
 
 @keyframes blinking-cursor {
     from, to { border-color: transparent; }
     50% { border-color: #10a37f; }
+}
+
+/* Fix for Edson message bubbles */
+.edson-message p {
+    white-space: normal;
+    word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    border-right: none !important; /* Force no border */
+}
+
+/* For completed typing animations */
+.edson-message .typing-animation {
+    max-width: 100%;
+    display: inline-block;
+    border-right: none !important; /* Force no border */
+}
+
+/* Ensure once typing is done, border is completely removed */
+.typing-animation.blinking-cursor {
+    border-right: none !important;
+}
+
+/* Projects content specific styling */
+.projects-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px;
+}
+
+.projects-content h2 {
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.project-item {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #121212;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #333;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .project-item {
+        flex-direction: row;
+        align-items: stretch;
+    }
+}
+
+.project-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border-color: #10a37f;
+}
+
+.project-image {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .project-image {
+        width: 280px;
+        height: auto;
+    }
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.project-item:hover .project-image img {
+    transform: scale(1.05);
+}
+
+.project-details {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.project-details h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.project-tag {
+    background-color: #053529;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.project-description {
+    color: #ccc;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tech-item {
+    background-color: #1e1e1e;
+    color: #ccc;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.project-item:hover .tech-item {
+    background-color: #2a2a2a;
+}
+
+.project-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.project-link {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #444;
+    transition: all 0.2s ease;
+}
+
+.project-link:hover {
+    background-color: #10a37f;
+    border-color: #10a37f;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(16, 163, 127, 0.3);
+}
+
+.other-projects-heading {
+    margin-top: 30px !important;
+}
+
+.other-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.mini-project {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid #333;
+    transition: all 0.2s ease;
+}
+
+.mini-project:hover {
+    border-color: #10a37f;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.mini-project h4 {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.mini-project p {
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+}
+
+.mini-project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.mini-project-tech span {
+    background-color: #252525;
+    color: #aaa;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+}
+
+.mini-project:hover .mini-project-tech span {
+    background-color: #333;
+    color: #ddd;
+}
+
+/* Contact page styling */
+.contact-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px;
+}
+
+.contact-content h2 {
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #121212;
+    border-radius: 8px;
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #333;
+}
+
+.contact-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-color: #10a37f;
+}
+
+.contact-icon {
+    background-color: #053529;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.contact-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.contact-details p a {
+    color: #10a37f;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.contact-details p a:hover {
+    text-decoration: underline;
+    color: #12c096;
+}
+
+/* Contact form styling */
+.contact-form-section {
+    margin-top: 20px;
+}
+
+.contact-form {
+    background-color: #121212;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #fff;
+    font-family: var(--font-roboto-flex);
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: #10a37f;
+    outline: none;
+    box-shadow: 0 0 0 1px #10a37f;
+}
+
+.submit-btn {
+    background-color: #10a37f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #12c096;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(16, 163, 127, 0.3);
 }

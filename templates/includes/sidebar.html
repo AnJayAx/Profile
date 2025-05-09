@@ -1,0 +1,79 @@
+<!-- Sidebar with collapsible functionality -->
+<div id="sidebar" class="sidebar transition-all duration-300">
+    <div class="sidebar-header">
+        <div class="sidebar-controls">
+            <!-- Theme toggle button -->
+            <button class="control-btn theme-toggle-btn" title="Toggle dark/light mode">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <!-- Font size selector dropdown -->
+            <div class="font-size-dropdown">
+                <button class="control-btn font-size-btn" title="Change font size">
+                    <i class="fas fa-font"></i>
+                </button>
+            </div>
+
+            <!-- Close sidebar button -->
+            <button id="close-sidebar-btn" class="control-btn close-sidebar-btn" title="Close sidebar">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+
+    </div>
+    <div class="sidebar-content">
+        <div class="recent-section">
+            <h3 class="section-title">Today</h3>
+            <div class="chat-history">
+                <a href="/" class="chat-item {% if active_page == 'home' %}active{% endif %}">
+                    <span>Tell me all about you</span>
+                </a>
+                <a href="/projects" class="chat-item {% if active_page == 'projects' %}active{% endif %}">
+                    <span>Do my project</span>
+                </a>
+                <a href="/contact" class="chat-item {% if active_page == 'contact' %}active{% endif %}">
+                    <span>Answer these questions</span>
+                </a>
+            </div>
+        </div>
+        <div class="project-section">
+            <h3 class="section-title">Projects</h3>
+            <div class="chat-history">
+                <div class="chat-item">
+                    <li class="fas fa-folder"></li>
+                    <span>Caduceus</span>
+                </div>
+                <div class="chat-item">
+                    <li class="fas fa-folder"></li>
+                    <span>AutoAssess</span>
+                </div>
+                <div class="chat-item">
+                    <li class="fas fa-folder"></li>
+                    <span>Gradescope v2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-footer">
+        <div class="sidebar-controls">
+            <!-- LinkedIn Button -->
+            <button class="control-btn linkedin-btn" title="LinkedIn">
+                <a href="https://www.linkedin.com/in/edsonng/" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </button>
+
+            <!-- GitHub Button -->
+            <button class="control-btn github-btn" title="GitHub">
+                <a href="https://github.com" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            </button>
+
+            <!-- Secret Button -->
+            <button id="secret-btn" class="control-btn secret-btn" title="Secret Mode">
+                <i class="fas fa-key"></i>
+            </button>
+        </div>
+    </div>
+</div>
