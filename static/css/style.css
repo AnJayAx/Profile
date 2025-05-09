@@ -682,6 +682,7 @@ body {
     align-self: flex-end;
     background-color: #10a37f; /* ChatGPT-like color for user */
     color: white;
+    text-align: left; /* Change from right to left alignment */
 }
 
 .edson-message {
@@ -770,7 +771,7 @@ body {
 /* Ensure message alignment works properly */
 .message.user-message {
     align-self: flex-end;
-    text-align: right;
+    text-align: left; /* Change from right to left alignment */
 }
 
 .message.ai-message {
@@ -780,14 +781,11 @@ body {
 
 /* Message content styling */
 .message-content {
-    max-width: 100%; /* Changed from 80% to ensure proper sizing in the narrower container */
+    max-width: 100%;
 }
 
 .user-message .message-content {
-    margin-left: auto;
-}
-
-.ai-message .message-content {
+    margin-left: 0; /* Changed from auto to 0 to left align content */
     margin-right: auto;
 }
 
@@ -1463,7 +1461,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 30px;
+    gap: 20px;
 }
 
 .contact-content h2 {
@@ -1473,6 +1471,37 @@ body {
     font-weight: 600;
     border-bottom: 1px solid #333;
     padding-bottom: 10px;
+}
+
+.contact-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* For larger screens, use a 2-column layout */
+@media (min-width: 768px) {
+    .contact-layout {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .contact-info-column {
+        flex: 1;
+        margin-right: 20px;
+    }
+
+    .contact-form-column {
+        flex: 1.5;
+    }
+}
+
+.contact-info-column h3,
+.contact-form-column h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: #10a37f;
 }
 
 .contact-methods {
@@ -1512,7 +1541,7 @@ body {
 }
 
 .contact-details h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 5px;
     color: #fff;
 }
@@ -1529,10 +1558,6 @@ body {
 }
 
 /* Contact form styling */
-.contact-form-section {
-    margin-top: 20px;
-}
-
 .contact-form {
     background-color: #121212;
     padding: 20px;
@@ -1561,6 +1586,18 @@ body {
     color: #fff;
     font-family: var(--font-roboto-flex);
     transition: all 0.3s ease;
+}
+
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #fff;
+    font-family: var(--font-roboto-flex);
+    transition: all 0.3s ease;
+    resize: none; /* Disable textarea resizing */
 }
 
 .form-group input:focus, 
