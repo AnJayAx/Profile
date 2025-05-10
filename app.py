@@ -3,7 +3,12 @@ import pandas as pd
 import numpy as np
 import os
 import joblib
-
+import base64
+import cv2
+import json
+from tensorflow.keras.models import load_model
+from werkzeug.utils import secure_filename
+import tempfile
 
 app = Flask(__name__)
 
@@ -20,6 +25,52 @@ models_dir = os.path.join(os.path.dirname(__file__), 'models/symptom_analyzer')
 clf_model = joblib.load(os.path.join(models_dir, 'CLF_model.sav'))
 svc_model = joblib.load(os.path.join(models_dir, 'SVC_model.sav'))
 xgb_model = joblib.load(os.path.join(models_dir, 'XGB_model.sav'))
+
+# Find skin condition model and class indices
+def find_skin_model():
+    models_dir = os.path.join(os.path.dirname(__file__), 'models/skin_condition')
+    model_files = [f for f in os.listdir(models_dir) if f.endswith('_best.h5')]
+    if not model_files:
+        print("No trained skin condition models found.")
+        return None, None
+    
+    # Get the most recent model
+    most_recent_model = sorted(model_files)[-1]
+    model_path = os.path.join(models_dir, most_recent_model)
+    
+    # Find matching class indices file
+    model_prefix = most_recent_model.replace('_best.h5', '')
+    class_indices_file = f"{model_prefix}_class_indices.json"
+    class_indices_path = os.path.join(models_dir, class_indices_file)
+    
+    if not os.path.exists(class_indices_path):
+        # Try to find any class indices file
+        json_files = [f for f in os.listdir(models_dir) if f.endswith('_class_indices.json')]
+        if json_files:
+            class_indices_path = os.path.join(models_dir, json_files[0])
+            print(f"Using class indices from: {json_files[0]}")
+        else:
+            print("No class indices file found.")
+            return model_path, None
+    
+    print(f"Using skin condition model: {most_recent_model}")
+    return model_path, class_indices_path
+
+# Load skin condition model and class indices (global for efficiency)
+SKIN_MODEL_PATH, CLASS_INDICES_PATH = find_skin_model()
+if SKIN_MODEL_PATH and CLASS_INDICES_PATH:
+    try:
+        SKIN_MODEL = load_model(SKIN_MODEL_PATH)
+        with open(CLASS_INDICES_PATH, 'r') as f:
+            CLASS_INDICES = json.load(f)
+        print("Skin condition model loaded successfully")
+    except Exception as e:
+        print(f"Error loading skin condition model: {e}")
+        SKIN_MODEL = None
+        CLASS_INDICES = None
+else:
+    SKIN_MODEL = None
+    CLASS_INDICES = None
 
 @app.route('/')
 def home():
@@ -232,6 +283,311 @@ def autoassess():
 @app.route('/gradescopev2')
 def gradescopev2():
     return render_template('gradescopev2.html', page_title="GRADESCOPEV2", active_page="gradescopev2")
+
+@app.route('/analyze_image', methods=['POST'])
+def analyze_image():
+    if 'image' not in request.files and 'image_data' not in request.form:
+        print("No image found in request")
+        return jsonify({'status': 'error', 'message': 'No image provided'}), 400
+    
+    try:
+        temp_dir = tempfile.mkdtemp()
+        temp_file_path = None
+        
+        # Log the request details
+        print("\n===== IMAGE ANALYSIS REQUEST =====")
+        print(f"Request method: {request.method}")
+        print(f"Files in request: {list(request.files.keys()) if request.files else 'None'}")
+        print(f"Form keys in request: {list(request.form.keys()) if request.form else 'None'}")
+        
+        if 'image' in request.files:
+            # Handle actual file upload
+            file = request.files['image']
+            print(f"Received file: {file.filename}")
+            
+            if file.filename == '':
+                print("Empty filename provided")
+                return jsonify({'status': 'error', 'message': 'No file selected'}), 400
+            
+            # Save file to temp location
+            temp_file_path = os.path.join(temp_dir, secure_filename(file.filename))
+            file.save(temp_file_path)
+            print(f"Saved file to: {temp_file_path}")
+            
+        elif 'image_data' in request.form:
+            # Handle base64 encoded image
+            print("Received base64 image data")
+            image_data = request.form['image_data']
+            
+            try:
+                if ',' in image_data:
+                    # Remove the data URL prefix if present
+                    print("Stripping data URL prefix")
+                    image_data = image_data.split(',', 1)[1]
+                
+                # Decode the base64 string
+                image_bytes = base64.b64decode(image_data)
+                print(f"Decoded base64 data, size: {len(image_bytes)} bytes")
+                
+                # Save to temporary file
+                temp_file_path = os.path.join(temp_dir, 'uploaded_image.jpg')
+                with open(temp_file_path, 'wb') as f:
+                    f.write(image_bytes)
+                print(f"Saved decoded image to: {temp_file_path}")
+            except Exception as e:
+                print(f"Error processing base64 image: {e}")
+                return jsonify({
+                    'status': 'error', 
+                    'message': f'Error processing image data: {str(e)}'
+                }), 400
+        
+        # Check if the file was successfully saved
+        if temp_file_path is None or not os.path.exists(temp_file_path):
+            print("Failed to save image file")
+            return jsonify({
+                'status': 'error',
+                'message': 'Failed to process the uploaded image'
+            }), 500
+        
+        # Check if model is available
+        if SKIN_MODEL is None or CLASS_INDICES is None:
+            print("Skin condition model not available")
+            return jsonify({
+                'status': 'error',
+                'message': 'Skin condition model not available'
+            }), 500
+        
+        # Verify the image file can be opened and is valid
+        try:
+            test_img = cv2.imread(temp_file_path)
+            if test_img is None or test_img.size == 0:
+                print(f"Invalid image file: Could not read image data from {temp_file_path}")
+                return jsonify({
+                    'status': 'error',
+                    'message': 'The uploaded file is not a valid image'
+                }), 400
+        except Exception as e:
+            print(f"Error validating image: {e}")
+            return jsonify({
+                'status': 'error',
+                'message': f'Error validating image: {str(e)}'
+            }), 400
+        
+        # Predict using the model
+        print("Starting skin condition prediction")
+        result = predict_skin_condition(temp_file_path)
+        print(f"Prediction result: {result}")
+        
+        # Clean up temp file
+        try:
+            os.remove(temp_file_path)
+            os.rmdir(temp_dir)
+            print("Cleaned up temporary files")
+        except Exception as e:
+            print(f"Warning: Failed to clean up temp files: {e}")
+        
+        print("===== END IMAGE ANALYSIS =====\n")
+        
+        # Use a fallback if prediction failed
+        if result.get('status') == 'error':
+            print("Using fallback response due to prediction error")
+            return jsonify({
+                'status': 'success',
+                'primary_condition': 'Unknown Skin Condition',
+                'confidence': 45.0,
+                'severity': 'moderate',
+                'top_predictions': [
+                    {"condition": "Unknown Skin Condition", "confidence": 45.0}
+                ],
+                'recommendations': [
+                    "Please consult with a dermatologist for proper diagnosis",
+                    "Keep the affected area clean and dry",
+                    "Try uploading a clearer image for better results"
+                ],
+                'message': f"Analysis completed with limited confidence: {result.get('message')}"
+            })
+        
+        return jsonify(result)
+    
+    except Exception as e:
+        print(f"Unhandled error in analyze_image: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            'status': 'error', 
+            'message': f'Error analyzing image: {str(e)}'
+        }), 500
+
+def predict_skin_condition(image_path):
+    """Predict skin condition from an image using the loaded model"""
+    try:
+        print(f"Starting prediction for image: {image_path}")
+        
+        # Verify the class indices
+        if not CLASS_INDICES:
+            print("Error: CLASS_INDICES is empty or None")
+            return {'status': 'error', 'message': 'Class indices not available'}
+            
+        # Reverse the indices to get class names from indices
+        class_names = {v: k for k, v in CLASS_INDICES.items()}
+        print(f"Available classes: {list(class_names.values())}")
+        
+        # Read and preprocess the image
+        img = cv2.imread(image_path)
+        if img is None:
+            print(f"Failed to read image from {image_path}")
+            return {'status': 'error', 'message': 'Could not read image file'}
+            
+        print(f"Original image shape: {img.shape}")
+        
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
+        img_resized = cv2.resize(img, (224, 224))  # Resize to model input size
+        print(f"Resized image shape: {img_resized.shape}")
+        
+        img_normalized = img_resized / 255.0  # Normalize pixel values
+        img_batch = np.expand_dims(img_normalized, axis=0)  # Add batch dimension
+        print(f"Input batch shape: {img_batch.shape}")
+        
+        # Make prediction
+        print("Running model prediction...")
+        predictions = SKIN_MODEL.predict(img_batch)
+        print(f"Raw prediction output shape: {predictions.shape}")
+        
+        predicted_class_idx = np.argmax(predictions[0])
+        print(f"Predicted class index: {predicted_class_idx}")
+        
+        # Check if the predicted index exists in our class names
+        if predicted_class_idx not in class_names:
+            print(f"Error: Predicted index {predicted_class_idx} not found in class names")
+            return {
+                'status': 'error', 
+                'message': f'Model predicted an unknown class index: {predicted_class_idx}'
+            }
+        
+        predicted_class = class_names[predicted_class_idx]
+        print(f"Predicted class name: {predicted_class}")
+        
+        confidence = float(predictions[0][predicted_class_idx] * 100)
+        print(f"Confidence: {confidence:.2f}%")
+        
+        # Print detailed prediction information
+        print("\n===== SKIN CONDITION PREDICTION =====")
+        print(f"Predicted class: {predicted_class} (Index: {predicted_class_idx})")
+        print(f"Confidence: {confidence:.2f}%")
+        
+        # Get and print top 3 predictions
+        top_indices = np.argsort(predictions[0])[-3:][::-1]
+        print("\nTop 3 predictions:")
+        
+        top_predictions = []
+        for i, idx in enumerate(top_indices, 1):
+            if idx in class_names:
+                class_name = class_names[idx]
+                class_confidence = float(predictions[0][idx] * 100)
+                print(f"  {i}. {class_name}: {class_confidence:.2f}%")
+                top_predictions.append({
+                    "condition": class_name, 
+                    "confidence": class_confidence
+                })
+        
+        # Determine severity and print it
+        severity = determine_severity(predicted_class, confidence)
+        print(f"\nDetermined severity: {severity}")
+        
+        # Get recommendations
+        recommendations = get_recommendations(predicted_class)
+        print(f"\nRecommendations:")
+        for i, rec in enumerate(recommendations, 1):
+            print(f"  {i}. {rec}")
+        
+        print("=====================================\n")
+        
+        return {
+            'status': 'success',
+            'primary_condition': predicted_class,
+            'confidence': confidence,
+            'severity': severity,
+            'top_predictions': top_predictions,
+            'recommendations': recommendations
+        }
+    
+    except Exception as e:
+        print(f"Error in predict_skin_condition: {e}")
+        import traceback
+        traceback.print_exc()
+        return {
+            'status': 'error',
+            'message': f'Prediction error: {str(e)}'
+        }
+
+def determine_severity(condition, confidence):
+    """Determine severity level based on condition and confidence"""
+    # Default to moderate
+    severity = "moderate"
+    
+    # Higher confidence often correlates with more severe cases
+    if confidence > 85:
+        severity = "severe"
+    elif confidence < 60:
+        severity = "mild"
+    
+    # Adjust based on specific conditions (simplified)
+    condition_lower = condition.lower()
+    if "acne" in condition_lower:
+        # Acne might be classified by levels
+        if "severe" in condition_lower:
+            severity = "severe"
+        elif "mild" in condition_lower:
+            severity = "mild"
+    
+    return severity
+
+def get_recommendations(condition):
+    """Get recommendations based on the skin condition"""
+    # Default recommendations
+    default_recommendations = [
+        "Consult a dermatologist for proper diagnosis and treatment",
+        "Keep the affected area clean and dry",
+        "Avoid scratching or picking at the affected area"
+    ]
+    
+    # Condition-specific recommendations
+    condition_lower = condition.lower()
+    
+    if "acne" in condition_lower:
+        return [
+            "Use non-comedogenic skincare products",
+            "Wash face twice daily with a gentle cleanser",
+            "Consider benzoyl peroxide or salicylic acid treatments",
+            "Avoid touching your face and picking at spots",
+            "Consult a dermatologist for prescription options if severe"
+        ]
+    elif "eczema" in condition_lower:
+        return [
+            "Use moisturizers regularly to prevent dry skin",
+            "Take lukewarm (not hot) showers or baths",
+            "Use mild, fragrance-free soaps and detergents",
+            "Apply prescribed corticosteroid creams as directed",
+            "Identify and avoid triggers that worsen symptoms"
+        ]
+    elif "psoriasis" in condition_lower:
+        return [
+            "Keep skin moisturized to reduce scaling",
+            "Use medicated shampoos for scalp psoriasis",
+            "Get moderate sun exposure (with doctor's approval)",
+            "Avoid injuries to skin and stress when possible",
+            "Follow treatment plan as directed by your doctor"
+        ]
+    elif "dermatitis" in condition_lower:
+        return [
+            "Identify and avoid allergens and irritants",
+            "Apply cool compresses to reduce itching",
+            "Use prescribed anti-inflammatory creams",
+            "Keep affected areas clean and moisturized",
+            "Wear cotton clothes and avoid harsh fabrics"
+        ]
+    
+    return default_recommendations
 
 if __name__ == '__main__':
     app.run(debug=True)

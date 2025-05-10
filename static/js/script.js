@@ -130,12 +130,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("AutoAssess page detected, initializing demo");
         initAutoAssessDemo();
     }
-    
-    // Initialize Caduceus demo if on the caduceus page
-    if (pageName === 'caduceus') {
-        console.log("Caduceus page detected, initializing demo");
-        initCadeuceusDemo();
-    }
 });
 
 // Function to initialize AutoAssess demo
@@ -300,42 +294,6 @@ function initAutoAssessDemo() {
                 if (activeContent) activeContent.classList.add('active');
             });
         });
-    }
-}
-
-// Function to initialize Caduceus demo
-function initCadeuceusDemo() {
-    console.log("Initializing Caduceus Demo");
-    
-    // Apply proper spacing to demo sections
-    const demoSections = document.querySelectorAll('.caduceus-demo');
-    
-    if (demoSections.length > 0) {
-        console.log(`Found ${demoSections.length} demo sections`);
-        
-        // Add separation between sections
-        demoSections.forEach((section, index) => {
-            // Add proper spacing for all sections except the last one
-            if (index < demoSections.length - 1) {
-                section.style.borderBottom = '1px solid #333';
-                section.style.marginBottom = '40px';
-                section.style.paddingBottom = '30px';
-            }
-            
-            // Make sure first section's heading doesn't have extra top margin
-            if (index === 0) {
-                const heading = section.querySelector('h2');
-                if (heading) {
-                    heading.style.marginTop = '0';
-                }
-            }
-        });
-    }
-    
-    // Ensure symptom checker and acne recognition are properly spaced
-    const acneRecognitionContainer = document.querySelector('.acne-recognition-container');
-    if (acneRecognitionContainer) {
-        acneRecognitionContainer.style.marginTop = '20px';
     }
 }
 
