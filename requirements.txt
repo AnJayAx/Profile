@@ -5,3 +5,4 @@ numpy
 joblib
 opencv-python
 tensorflow
+scikit-learn
