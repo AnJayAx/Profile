@@ -3,5 +3,5 @@ gunicorn
 pandas
 numpy
 joblib
-cv2
+opencv-python
 tensorflow
