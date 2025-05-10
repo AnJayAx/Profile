@@ -2286,3 +2286,576 @@ body {
 .empty-state-message p {
     font-size: 0.9rem;
 }
+
+/* AutoAssess Demo Styling */
+.autoassess-demo {
+    padding: 20px;
+    background-color: #121212;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.autoassess-demo h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #ffffff;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.demo-form {
+    margin-bottom: 20px;
+}
+
+.demo-form p {
+    color: #ccc;
+    margin-bottom: 12px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.website-input {
+    flex: 1;
+    padding: 12px 15px;
+    background-color: #1a1a1a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.website-input:focus {
+    border-color: #10a37f;
+    outline: none;
+    box-shadow: 0 0 0 1px #10a37f;
+}
+
+.analyze-button {
+    padding: 12px 20px;
+    background-color: #10a37f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.analyze-button:hover {
+    background-color: #12c096;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(16, 163, 127, 0.3);
+}
+
+/* Loading indicator with progress steps */
+.loading-hidden {
+    display: none;
+}
+
+.analysis-progress {
+    padding: 20px;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin-top: 20px;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    right: 40px;
+    height: 2px;
+    background-color: #333;
+    z-index: 1;
+}
+
+.step {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #252525;
+    border: 2px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-icon {
+    background-color: #10a37f;
+    border-color: #10a37f;
+    box-shadow: 0 0 10px rgba(16, 163, 127, 0.5);
+}
+
+.step.completed .step-icon {
+    background-color: #10a37f;
+    border-color: #10a37f;
+}
+
+.step-label {
+    font-size: 0.8rem;
+    color: #777;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-label {
+    color: #10a37f;
+    font-weight: 500;
+}
+
+.step.completed .step-label {
+    color: #10a37f;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 6px;
+    background-color: #252525;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 15%;
+    background-color: #10a37f;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.analysis-status {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* Analysis Results Styling */
+.analysis-results {
+    padding: 20px;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin-top: 20px;
+}
+
+.analysis-results.hidden {
+    display: none;
+}
+
+.results-header {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+@media (min-width: 768px) {
+    .results-header {
+        flex-direction: row;
+    }
+    
+    .site-preview {
+        flex: 1;
+    }
+    
+    .site-overview {
+        flex: 2;
+    }
+}
+
+.site-preview {
+    position: relative;
+}
+
+.preview-container {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+    height: 200px;
+}
+
+.preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+}
+
+#site-domain {
+    color: #fff;
+    font-weight: 500;
+}
+
+.site-overview {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #121212;
+    border: 1px solid #333;
+}
+
+.site-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.site-url {
+    font-size: 0.9rem;
+    color: #10a37f;
+    margin-bottom: 15px;
+    word-break: break-all;
+}
+
+.score-card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+@media (min-width: 768px) {
+    .score-card {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .overall-score {
+        flex: 0 0 auto;
+        margin-right: 20px;
+    }
+    
+    .score-breakdown {
+        flex: 1;
+    }
+}
+
+.overall-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.score-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #053529;
+    border: 3px solid #10a37f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(16, 163, 127, 0.3);
+}
+
+.score-label {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.score-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.breakdown-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+}
+
+.breakdown-label {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.breakdown-score {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.breakdown-score.good {
+    color: #2ecc71;
+}
+
+.breakdown-score.average {
+    color: #f39c12;
+}
+
+.breakdown-score.poor {
+    color: #e74c3c;
+}
+
+/* Tabs styling */
+.results-tabs {
+    display: flex;
+    border-bottom: 1px solid #333;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+    color: #aaa;
+    white-space: nowrap;
+}
+
+.tab.active {
+    color: #10a37f;
+    border-bottom-color: #10a37f;
+}
+
+.tab:hover:not(.active) {
+    color: #fff;
+    background-color: rgba(16, 163, 127, 0.1);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Metric cards */
+.metric-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.metric-card {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #121212;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-color: #10a37f;
+}
+
+.metric-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+.metric-icon.good {
+    background-color: #1e6b3b;
+}
+
+.metric-icon.average {
+    background-color: #8e580a;
+}
+
+.metric-icon.poor {
+    background-color: #841c1c;
+}
+
+.metric-details h4 {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.metric-details p {
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.metric-score {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.metric-score.good {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+}
+
+.metric-score.average {
+    background-color: rgba(243, 156, 18, 0.2);
+    color: #f39c12;
+}
+
+.metric-score.poor {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+}
+
+/* Recommendations styling */
+.recommendations-section {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #121212;
+    border: 1px solid #333;
+}
+
+.recommendations-section h4 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.recommendations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.recommendation-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #1a1a1a;
+    border-left: 3px solid transparent;
+}
+
+.recommendation-item:hover {
+    background-color: #202020;
+}
+
+.priority {
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.priority.high {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+}
+
+.priority.medium {
+    background-color: rgba(243, 156, 18, 0.2);
+    color: #f39c12;
+}
+
+.priority.low {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+}
+
+.recommendation-item p {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* Report actions */
+.report-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    justify-content: center;
+}
+
+.report-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: #121212;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.report-button:hover {
+    background-color: #10a37f;
+    border-color: #10a37f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Additional AutoAssess input styling */
+.website-input.error {
+    border-color: #e74c3c;
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}

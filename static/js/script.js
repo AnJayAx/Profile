@@ -124,7 +124,178 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+    
+    // Initialize AutoAssess demo if on the autoassess page
+    if (pageName === 'autoassess') {
+        console.log("AutoAssess page detected, initializing demo");
+        initAutoAssessDemo();
+    }
 });
+
+// Function to initialize AutoAssess demo
+function initAutoAssessDemo() {
+    console.log("Initializing AutoAssess Demo");
+    
+    const analyzeBtn = document.getElementById('analyze-btn');
+    const websiteInput = document.getElementById('website-url');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const analysisResults = document.getElementById('analysis-results');
+    
+    console.log("AutoAssess elements:", { 
+        analyzeBtn: analyzeBtn, 
+        websiteInput: websiteInput,
+        loadingIndicator: loadingIndicator,
+        analysisResults: analysisResults
+    });
+    
+    if (!analyzeBtn || !websiteInput || !loadingIndicator || !analysisResults) {
+        console.error("Could not find all necessary elements for AutoAssess demo");
+        return;
+    }
+    
+    // Set up demo site thumbnail placeholder
+    const siteThumbnail = document.getElementById('site-thumbnail');
+    if (siteThumbnail) {
+        // Default placeholder image
+        siteThumbnail.src = "https://placehold.co/600x400/121212/aaaaaa?text=Website+Preview";
+    }
+    
+    // Explicitly bind click event
+    analyzeBtn.addEventListener('click', function() {
+        console.log("Analyze button clicked");
+        const url = websiteInput.value.trim();
+        
+        if (!url) {
+            // Highlight input if empty
+            websiteInput.classList.add('error');
+            websiteInput.style.borderColor = "#e74c3c";
+            setTimeout(() => {
+                websiteInput.classList.remove('error');
+                websiteInput.style.borderColor = "";
+            }, 800);
+            return;
+        }
+        
+        // Show loading indicator
+        loadingIndicator.classList.remove('loading-hidden');
+        
+        // Hide results if previously shown
+        analysisResults.classList.add('hidden');
+        
+        // Start progress animation
+        let currentStep = 1;
+        const totalSteps = 4;
+        const progressBar = document.querySelector('.progress-bar');
+        const analysisStatus = document.querySelector('.analysis-status');
+        const steps = document.querySelectorAll('.step');
+        
+        // Initialize progress bar
+        if (progressBar) progressBar.style.width = '15%';
+        
+        // Status messages for each step
+        const statusMessages = [
+            "Crawling website content...",
+            "Analyzing structure and content...",
+            "Calculating performance scores...",
+            "Generating comprehensive report..."
+        ];
+        
+        // Animate through steps
+        const progressInterval = setInterval(() => {
+            // Update current step
+            updateStep(currentStep);
+            
+            // Move to next step
+            currentStep++;
+            
+            if (currentStep > totalSteps) {
+                clearInterval(progressInterval);
+                
+                // After all steps complete, show results
+                setTimeout(() => {
+                    loadingIndicator.classList.add('loading-hidden');
+                    showAnalysisResults(url);
+                }, 800);
+            }
+        }, 1500); // Time between steps
+        
+        // Function to update step visual state
+        function updateStep(step) {
+            // Update progress bar width
+            if (progressBar) {
+                const progressPercentage = (step / totalSteps) * 100;
+                progressBar.style.width = `${Math.max(15, progressPercentage)}%`;
+            }
+            
+            // Update status message
+            if (analysisStatus) {
+                analysisStatus.textContent = statusMessages[step - 1];
+            }
+            
+            // Update step indicators
+            steps.forEach((stepEl, index) => {
+                if (index + 1 < step) {
+                    stepEl.classList.remove('active');
+                    stepEl.classList.add('completed');
+                } else if (index + 1 === step) {
+                    stepEl.classList.add('active');
+                    stepEl.classList.remove('completed');
+                } else {
+                    stepEl.classList.remove('active', 'completed');
+                }
+            });
+        }
+    });
+    
+    // Function to display analysis results
+    function showAnalysisResults(url) {
+        console.log("Showing analysis results for:", url);
+        
+        // Populate results with website info
+        const siteTitle = document.getElementById('site-title');
+        const siteUrl = document.getElementById('site-url');
+        const siteDomain = document.getElementById('site-domain');
+        
+        // Extract domain from URL
+        let domain = url.replace(/^https?:\/\//, '').split('/')[0];
+        
+        if (siteTitle) siteTitle.textContent = `${domain} Analysis Report`;
+        if (siteUrl) siteUrl.textContent = url;
+        if (siteDomain) siteDomain.textContent = domain;
+        
+        // Update thumbnail if possible
+        const siteThumbnail = document.getElementById('site-thumbnail');
+        if (siteThumbnail) {
+            // In a real application, this would be an actual screenshot
+            // For demo purposes, we'll use a placeholder with the domain name
+            siteThumbnail.src = `https://placehold.co/600x400/121212/aaaaaa?text=${domain}`;
+        }
+        
+        // Show results
+        analysisResults.classList.remove('hidden');
+        
+        // Set up tab navigation
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab content
+                const tabContents = document.querySelectorAll('.tab-content');
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Show corresponding content
+                const tabId = this.getAttribute('data-tab');
+                const activeContent = document.querySelector(`.tab-content[data-content="${tabId}"]`);
+                if (activeContent) activeContent.classList.add('active');
+            });
+        });
+    }
+}
 
 // Function to get element position
 function getElementPosition(element) {
