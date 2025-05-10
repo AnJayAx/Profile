@@ -3,3 +3,5 @@ gunicorn
 pandas
 numpy
 joblib
+cv2
+tensorflow
