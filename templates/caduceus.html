@@ -722,7 +722,7 @@
                 <div class="caduceus-demo">
                     <h2>Acne Recognition Demo</h2>
                     <p>Upload an image of skin with acne to get an AI-powered assessment of the acne type. This is a simplified demonstration of the Caduceus Acne Detection system.</p>
-                    
+                    <p>* Please note that this feature is a concept. Models used for the prediction is not accurate and will produce alarming results.</p>
                     <div class="acne-recognition-container">
                         <div class="image-upload-area">
                             <h3>Upload Image</h3>
@@ -1066,6 +1066,12 @@
                     `;
                 }
 
+                // Remove any existing confidence info before adding a new one
+                const existingConfidence = acneResultsPanel.querySelector('.confidence-info');
+                if (existingConfidence) {
+                    existingConfidence.remove();
+                }
+
                 // Show confidence level if available
                 if (data.confidence) {
                     const confidenceInfo = document.createElement('div');
@@ -1073,9 +1079,41 @@
                     confidenceInfo.innerHTML = `<span class="confidence-label">AI Confidence:</span> 
                                               <span class="confidence-value">${data.confidence.toFixed(1)}%</span>`;
                     
+                    // Insert at the appropriate position in the DOM
+                    const recommendationsSection = acneResultsPanel.querySelector('.acne-recommendations');
+                    if (recommendationsSection && recommendationsSection.parentNode) {
+                        recommendationsSection.parentNode.insertBefore(confidenceInfo, recommendationsSection);
+                    }
+                }
+
+                // Show top conditions if available (new feature)
+                if (data.top_conditions && data.top_conditions.length > 0) {
+                    // Remove existing top conditions section if it exists
+                    const existingTopConditions = acneResultsPanel.querySelector('.top-conditions');
+                    if (existingTopConditions) {
+                        existingTopConditions.remove();
+                    }
+                    
+                    // Create new top conditions section
+                    const topConditionsSection = document.createElement('div');
+                    topConditionsSection.className = 'top-conditions';
+                    topConditionsSection.innerHTML = '<h4>Possible Conditions:</h4>';
+                    
+                    const conditionsList = document.createElement('ul');
+                    data.top_conditions.forEach(item => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<span class="condition-name">${item.condition}</span> 
+                                      <span class="condition-confidence">(${item.confidence.toFixed(1)}%)</span>`;
+                        conditionsList.appendChild(li);
+                    });
+                    
+                    topConditionsSection.appendChild(conditionsList);
+                    
                     // Insert before recommendations
                     const recommendationsSection = acneResultsPanel.querySelector('.acne-recommendations');
-                    acneResultsPanel.insertBefore(confidenceInfo, recommendationsSection);
+                    if (recommendationsSection && recommendationsSection.parentNode) {
+                        recommendationsSection.parentNode.insertBefore(topConditionsSection, recommendationsSection);
+                    }
                 }
             }
             
@@ -1096,6 +1134,17 @@
                 // Ensure analyzing indicator is hidden
                 analyzingIndicator.classList.add('hidden');
                 analyzingIndicator.style.display = 'none';
+                
+                // Remove dynamically added sections
+                const existingConfidence = acneResultsPanel.querySelector('.confidence-info');
+                if (existingConfidence) {
+                    existingConfidence.remove();
+                }
+                
+                const existingTopConditions = acneResultsPanel.querySelector('.top-conditions');
+                if (existingTopConditions) {
+                    existingTopConditions.remove();
+                }
             });
             
             function handleImageFile(file) {
@@ -1142,6 +1191,59 @@
                 uploadPlaceholder.style.display = 'flex';
             }
         }
+        
+        // Add error handling for image analysis
+        const imageAnalysisErrorHandler = function(error) {
+            console.error('Error during image analysis:', error);
+            
+            // Create a custom error response
+            const errorResponse = {
+                status: 'error',
+                message: 'An error occurred while analyzing the image.',
+                primary_condition: 'Analysis Error',
+                severity: 'unknown',
+                confidence: 0,
+                recommendations: [
+                    'Please try again with a different image',
+                    'Make sure your image is clear and well-lit',
+                    'If the problem persists, try a different browser',
+                    'Contact support if the issue continues'
+                ]
+            };
+            
+            // Hide analyzing indicator
+            if (analyzingIndicator) {
+                analyzingIndicator.style.display = 'none';
+                analyzingIndicator.classList.add('hidden');
+            }
+            
+            // Display error in results panel instead of alert
+            if (acneResultsPanel) {
+                updateAcneResults(errorResponse);
+                acneResultsPanel.style.display = 'block';
+                acneResultsPanel.classList.remove('hidden');
+            } else {
+                alert('An error occurred while analyzing the image. Please try again.');
+            }
+            
+            // Hide empty state
+            if (emptyStateMessage) {
+                emptyStateMessage.style.display = 'none';
+            }
+        };
+        
+        // Add event listener for global AJAX errors
+        window.addEventListener('error', function(event) {
+            if (event.target.tagName === 'IMG' && event.target.id === 'preview-image') {
+                console.error('Image loading error:', event);
+                alert('Error loading the image. Please try a different image.');
+                
+                // Reset the image upload
+                if (resetAcneScan) {
+                    resetAcneScan.click();
+                }
+            }
+        }, true);
     });
 </script>
 {% endblock %}
