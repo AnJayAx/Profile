@@ -74,7 +74,11 @@ else:
 
 @app.route('/')
 def home():
-    return render_template('index.html', active_page='home')
+    return render_template('index.html', page_title="HOME", active_page='home')
+
+@app.route('/about')
+def about():
+    return render_template('about.html', page_title="ABOUT", active_page="about")
 
 @app.route('/projects')
 def projects():

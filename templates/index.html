@@ -1,107 +1,244 @@
-{% extends "base.html" %}
-{% block title %}WELCOME{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<div class="chat-header">
-    <div class="text-scramble" data-text="ABOUT ME">ABOUT ME</div>
-</div>
-<div class="chat-content-container">
-    <div class="chat-messages-wrapper">
-        <div class="chat-messages">
-            <div class="message user-message hidden" data-message-index="0">Tell me all about you</div>
-            <div class="thinking-message hidden" data-message-index="1">Searching ...</div>
-            <div class="message edson-message hidden" data-message-index="2">
-                <p class="typing-animation" data-text="Absolutely! Here's a comprehensive overview of who I am."></p>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="keyword"
+        content="resume, cv, portfolio, vcard, responsive, retina, jquery, css3, tailwindcss, material CV, creative, designer, developer, online cv, online resume, powerful portfolio, professional, landing page">
+    <meta name="description" content="Edson Ng Website">
+    <meta name="author" content="Edson">
+
+    <title>{% block title %}WELCOME{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='media/logo/ED.png') }}" sizes="any">
+
+    <!-- Add Roboto Flex font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<div class="preloader" id="preloader">
+    <!-- Add cursor element -->
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="desktop">
+        <div class="desktop-icons">
+            <div class="desktop-icon" id="trash-bin">
+                <i class="fas fa-trash"></i>
+                <span>Recycle Bin</span>
             </div>
-            <div class="message edson-message hidden" data-message-index="3">
-                <div class="profile-content">
-                    <div class="about-me-section">
-                        <div class="profile-image">
-                            <img src="{{ url_for('static', filename='media/profile/top_osaka.png') }}" alt="Edson Ng">
-                        </div>
-                        <div class="message-text">
-                            <h2>Hello!</h2>
-                            My name is <b>Edson Ng</b> and I am an undergraduate in Singapore Institute
-                            of Technology pursuing a
-                            degree in Applied Artificial Intelligence. I am a passionate AI developer
-                            with a strong interest in web development. I have experience in various
-                            programming languages and frameworks, and I am always eager to
-                            learn new technologies and improve my skills.
-                        </div>
-                    </div>
-
-                    <div class="skills-section">
-                        <h2>Skills</h2>
-                        <div class="skills-grid">
-                            <div class="skill-item">HTML5</div>
-                            <div class="skill-item">CSS3</div>
-                            <div class="skill-item">JavaScript</div>
-                            <div class="skill-item">Python</div>
-                            <div class="skill-item">Java</div>
-                            <div class="skill-item">C</div>
-                            <div class="skill-item">C#</div>
-                            <div class="skill-item">MySQL</div>
-                            <div class="skill-item">NodeJS</div>
-                            <div class="skill-item">PHP</div>
-                            <div class="skill-item">Bootstrap</div>
-                            <div class="skill-item">TailwindCSS</div>
-                            <div class="skill-item">Git</div>
-                        </div>
-                    </div>
-
-                    <div class="education-section">
-                        <h2>Education</h2>
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="year-badge">2024 - 2027</div>
-                                <div class="education-content">
-                                    <h3>Singapore Institute of Technology</h3>
-                                    <p>Bachelor's Degree in Applied Artificial Intelligence</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="year-badge">2019 - 2022</div>
-                                <div class="education-content">
-                                    <h3>Nanyang Polytechnic</h3>
-                                    <p>Diploma in Information Technology</p>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="year-badge">2015 - 2019</div>
-                                <div class="education-content">
-                                    <h3>Punggol Secondary School</h3>
-                                    <p>GCE 'O' Levels Certificate</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="hobbies-section">
-                        <h2>Hobbies</h2>
-                        <div class="hobbies-container">
-                            <div class="hobby-category">
-                                <div class="category-title"><i class="fas fa-running"></i> Sports</div>
-                                <div class="hobby-items">
-                                    <div class="hobby-item">Basketball</div>
-                                    <div class="hobby-item">Badminton</div>
-                                    <div class="hobby-item">Bowling</div>
-                                    <div class="hobby-item">Football</div>
-                                </div>
-                            </div>
-                            <div class="hobby-category">
-                                <div class="category-title"><i class="fas fa-gamepad"></i> Gaming</div>
-                                <div class="hobby-items">
-                                    <div class="hobby-item">FPS</div>
-                                    <div class="hobby-item">RPG</div>
-                                    <div class="hobby-item">Survival</div>
-                                    <div class="hobby-item">Racing</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="desktop-icon" id="file-explorer">
+                <i class="fas fa-folder"></i>
+                <span>File Explorer</span>
+            </div>
+            <div class="desktop-icon" id="profile-gpt">
+                <div class="icon-image">
+                    <img src="{{ url_for('static', filename='media/logo/ED_transparent.png') }}" alt="ED Logo">
+                </div>
+                <span>EdsonGPT</span>
+            </div>
+        </div>
+        <div class="app-window" id="app-window">
+            <div class="window-header">
+                <div class="window-title">
+                    <img src="{{ url_for('static', filename='media/logo/ED_transparent.png') }}" alt="ED Logo"
+                        class="window-logo">
+                    <span>EdsonGPT</span>
+                </div>
+                <div class="window-controls">
+                    <span class="minimize"></span>
+                    <span class="maximize"></span>
+                    <span class="close"></span>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>Loading EdsonGPT...</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+
+<!-- Add animation-specific styles -->
+<style>
+    /* Animation-specific styles */
+    .custom-cursor {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23000000' stroke='%23FFFF00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'%3E%3C/path%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        z-index: 10000;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        will-change: top, left;
+    }
+    
+    .custom-cursor.visible {
+        opacity: 1;
+    }
+    
+    @keyframes moveCursor {
+        0% {
+            top: 50vh;
+            left: 50vw;
+            animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        100% {
+            top: var(--cursor-end-y, 100px);
+            left: var(--cursor-end-x, 100px);
+        }
+    }
+    
+    .cursor-animate {
+        animation: moveCursor 1.2s forwards;
+    }
+    
+    @keyframes click {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(0.95);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    
+    .click-animation {
+        animation: click 0.3s ease;
+    }
+</style>
+
+<!-- Animation-specific JavaScript -->
+<script>
+    // Function to get element position
+    function getElementPosition(element) {
+        const rect = element.getBoundingClientRect();
+        return {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2
+        };
+    }
+
+    // Set cursor animation target (center of ProfileGPT icon)
+    function updateCursorTarget() {
+        const profileGptIcon = document.getElementById('profile-gpt');
+        if (profileGptIcon) {
+            const iconPos = getElementPosition(profileGptIcon);
+            document.documentElement.style.setProperty('--cursor-end-x', `${iconPos.x}px`);
+            document.documentElement.style.setProperty('--cursor-end-y', `${iconPos.y}px`);
+        }
+    }
+
+    // Animation sequence for home page
+    document.addEventListener('DOMContentLoaded', function() {
+        const preloader = document.getElementById('preloader');
+        const profileGptIcon = document.getElementById('profile-gpt');
+        const appWindow = document.getElementById('app-window');
+        const customCursor = document.getElementById('custom-cursor');
+            
+        // Explicitly position cursor at the center of the screen initially
+        if (customCursor) {
+            customCursor.style.top = '50vh';
+            customCursor.style.left = '50vw';
+        }
+        
+        // Initialize cursor position
+        setTimeout(() => {
+            if (profileGptIcon && customCursor) {
+                updateCursorTarget();
+                
+                // Start cursor animation sequence
+                customCursor.classList.add('visible');
+                
+                setTimeout(() => {
+                    // Start moving cursor with smoother animation
+                    customCursor.classList.add('cursor-animate');
+                    
+                    // After cursor reaches icon, simulate click
+                    setTimeout(() => {
+                        // Add active class to simulate click on ProfileGPT icon
+                        profileGptIcon.classList.add('active', 'click-animation');
+                        
+                        // After click animation, show app window
+                        setTimeout(() => {
+                            appWindow.classList.add('active');
+                            
+                            // Hide cursor after click
+                            customCursor.style.opacity = '0';
+                            
+                            // After window appears, wait a bit then start transitioning to main content
+                            setTimeout(() => {
+                                // Make the app window expand to fill the screen
+                                appWindow.classList.add('fullscreen');
+                                
+                                // After expansion completes, adjust position
+                                setTimeout(() => {
+                                    appWindow.classList.add('fullscreen-complete');
+                                    
+                                    // Hide the loading spinner - simplified completion without mainContent check
+                                    const loadingIndicator = appWindow.querySelector('.loading-indicator');
+                                    if (loadingIndicator) {
+                                        loadingIndicator.style.display = 'none';
+                                    }
+                                    
+                                    // Just show a simple message to confirm loading is complete
+                                    const loadingMessage = document.createElement('div');
+                                    loadingMessage.textContent = 'Loading complete';
+                                    loadingMessage.style.textAlign = 'center';
+                                    loadingMessage.style.padding = '20px';
+                                    loadingMessage.style.color = '#fff';
+                                    appWindow.querySelector('.window-content').appendChild(loadingMessage);
+                                    
+                                    // Force redirect to about page
+                                    console.log("Animation complete, redirecting to about page in 1 second");
+                                    
+                                    // Use direct window.location assignment for more reliable redirect
+                                    setTimeout(() => {
+                                        console.log("Executing redirect now");
+                                        
+                                        // Get base URL to handle subdirectories
+                                        const baseUrl = window.location.origin + 
+                                            (window.location.pathname.includes('/index.html') 
+                                                ? window.location.pathname.replace('/index.html', '')
+                                                : window.location.pathname.replace(/\/[^\/]*$/, ''));
+                                        
+                                        // Construct full URL
+                                        const targetUrl = baseUrl + '/about';
+                                        console.log("Redirecting to:", targetUrl);
+                                        
+                                        // Use a more direct approach
+                                        window.location.href = targetUrl;
+                                    }, 1000);
+                                }, 500); // Wait for the size transition to complete
+                            }, 3000); // Wait 3 seconds showing the "app loading"
+                        }, 800);
+                    }, 1200);
+                }, 500);
+            }
+        }, 500);
+        
+        // Add click effect for manual clicking
+        if (profileGptIcon) {
+            profileGptIcon.addEventListener('click', function() {
+                this.classList.add('click-animation');
+                setTimeout(() => {
+                    this.classList.remove('click-animation');
+                }, 300);
+            });
+        }
+    });
+</script>

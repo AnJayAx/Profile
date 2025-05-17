@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="keyword"
         content="resume, cv, portfolio, vcard, responsive, retina, jquery, css3, tailwindcss, material CV, creative, designer, developer, online cv, online resume, powerful portfolio, professional, landing page">
@@ -24,62 +23,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-black text-white">
-    <!-- check if the page is index.html, else do not load this preloader -->
-    <div class="preloader" id="preloader">
-        <!-- Add cursor element -->
-        <div class="custom-cursor" id="custom-cursor"></div>
-        <div class="desktop">
-            <div class="desktop-icons">
-                <div class="desktop-icon" id="trash-bin">
-                    <i class="fas fa-trash"></i>
-                    <span>Recycle Bin</span>
-                </div>
-                <div class="desktop-icon" id="file-explorer">
-                    <i class="fas fa-folder"></i>
-                    <span>File Explorer</span>
-                </div>
-                <div class="desktop-icon" id="profile-gpt">
-                    <div class="icon-image">
-                        <img src="{{ url_for('static', filename='media/logo/ED_transparent.png') }}" alt="ED Logo">
-                    </div>
-                    <span>EdsonGPT</span>
-                </div>
-
+<body class="bg-black text-white non-home-page" data-page="{{ active_page }}">
+    <!-- For non-home pages, directly show app window UI -->
+    <div class="app-window active fullscreen fullscreen-complete" id="app-window">
+        <div class="window-header">
+            <div class="window-title">
+                <img src="{{ url_for('static', filename='media/logo/ED_transparent.png') }}" alt="ED Logo"
+                    class="window-logo">
+                <span>EdsonGPT</span>
             </div>
-            <div class="app-window" id="app-window">
-                <div class="window-header">
-                    <div class="window-title">
-                        <img src="{{ url_for('static', filename='media/logo/ED_transparent.png') }}" alt="ED Logo"
-                            class="window-logo">
-                        <span>EdsonGPT</span>
-                    </div>
-                    <div class="window-controls">
-                        <span class="minimize"></span>
-                        <span class="maximize"></span>
-                        <span class="close"></span>
-                    </div>
-                </div>
-                <div class="window-content">
-                    <div class="loading-indicator">
-                        <div class="spinner"></div>
-                        <p>Loading EdsonGPT...</p>
-                    </div>
-                </div>
+            <div class="window-controls">
+                <span class="minimize"></span>
+                <span class="maximize"></span>
+                <span class="close"></span>
             </div>
         </div>
-    </div>
-    <div class="main-content" style="display: none;">
-        <div class="chat-container flex transition-all duration-300">
-            <!-- Sidebar with collapsible functionality -->
-            {% block sidebar %}
-            {% include "includes/sidebar.html" %}
-            {% endblock %}
+        <div class="window-content">
+            <div class="main-content no-animation" style="display: block; opacity: 1;">
+                <div class="chat-container flex transition-all duration-300">
+                    <!-- Sidebar with collapsible functionality using the shared include -->
+                    {% include "includes/sidebar.html" %}
 
-            <!-- Main chat area placeholder -->
-            <div class="chat-area">
-                {% block content %}
-                {% endblock %}
+                    <!-- Main chat area placeholder -->
+                    <div class="chat-area">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -553,25 +553,6 @@ body {
     overflow: hidden;
 }
 
-/* Animation for clicking */
-@keyframes click {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(0.95);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-.click-animation {
-    animation: click 0.3s ease;
-}
-
 /* Custom cursor for preloader */
 .custom-cursor {
     position: absolute;

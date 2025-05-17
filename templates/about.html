@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}WELCOME{% endblock %}
+
+{% block content %}
+<div class="chat-header">
+    <div class="text-scramble" data-text="ABOUT ME">ABOUT ME</div>
+</div>
+<div class="chat-content-container">
+    <div class="chat-messages-wrapper">
+        <div class="chat-messages">
+            <div class="message user-message hidden" data-message-index="0">Tell me all about you</div>
+            <div class="thinking-message hidden" data-message-index="1">Searching ...</div>
+            <div class="message edson-message hidden" data-message-index="2">
+                <p class="typing-animation" data-text="Absolutely! Here's a comprehensive overview of who I am."></p>
+            </div>
+            <div class="message edson-message hidden" data-message-index="3">
+                <div class="profile-content">
+                    <div class="about-me-section">
+                        <div class="profile-image">
+                            <img src="{{ url_for('static', filename='media/profile/top_osaka.png') }}" alt="Edson Ng">
+                        </div>
+                        <div class="message-text">
+                            <h2>Hello!</h2>
+                            My name is <b>Edson Ng</b> and I am an undergraduate in Singapore Institute
+                            of Technology pursuing a
+                            degree in Applied Artificial Intelligence. I am a passionate AI developer
+                            with a strong interest in web development. I have experience in various
+                            programming languages and frameworks, and I am always eager to
+                            learn new technologies and improve my skills.
+                        </div>
+                    </div>
+
+                    <div class="skills-section">
+                        <h2>Skills</h2>
+                        <div class="skills-grid">
+                            <div class="skill-item">HTML5</div>
+                            <div class="skill-item">CSS3</div>
+                            <div class="skill-item">JavaScript</div>
+                            <div class="skill-item">Python</div>
+                            <div class="skill-item">Java</div>
+                            <div class="skill-item">C</div>
+                            <div class="skill-item">C#</div>
+                            <div class="skill-item">MySQL</div>
+                            <div class="skill-item">NodeJS</div>
+                            <div class="skill-item">PHP</div>
+                            <div class="skill-item">Bootstrap</div>
+                            <div class="skill-item">TailwindCSS</div>
+                            <div class="skill-item">Git</div>
+                        </div>
+                    </div>
+
+                    <div class="education-section">
+                        <h2>Education</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="year-badge">2024 - 2027</div>
+                                <div class="education-content">
+                                    <h3>Singapore Institute of Technology</h3>
+                                    <p>Bachelor's Degree in Applied Artificial Intelligence</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="year-badge">2019 - 2022</div>
+                                <div class="education-content">
+                                    <h3>Nanyang Polytechnic</h3>
+                                    <p>Diploma in Information Technology</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="year-badge">2015 - 2019</div>
+                                <div class="education-content">
+                                    <h3>Punggol Secondary School</h3>
+                                    <p>GCE 'O' Levels Certificate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hobbies-section">
+                        <h2>Hobbies</h2>
+                        <div class="hobbies-container">
+                            <div class="hobby-category">
+                                <div class="category-title"><i class="fas fa-running"></i> Sports</div>
+                                <div class="hobby-items">
+                                    <div class="hobby-item">Basketball</div>
+                                    <div class="hobby-item">Badminton</div>
+                                    <div class="hobby-item">Bowling</div>
+                                    <div class="hobby-item">Football</div>
+                                </div>
+                            </div>
+                            <div class="hobby-category">
+                                <div class="category-title"><i class="fas fa-gamepad"></i> Gaming</div>
+                                <div class="hobby-items">
+                                    <div class="hobby-item">FPS</div>
+                                    <div class="hobby-item">RPG</div>
+                                    <div class="hobby-item">Survival</div>
+                                    <div class="hobby-item">Racing</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

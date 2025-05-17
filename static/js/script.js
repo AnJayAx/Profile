@@ -1,10 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Get elements
-    const preloader = document.getElementById('preloader');
-    const profileGptIcon = document.getElementById('profile-gpt');
-    const appWindow = document.getElementById('app-window');
-    const mainContent = document.querySelector('.main-content');
-    
     // Get the page type from the body data attribute
     const pageName = document.body.dataset.page || 'unknown';
     console.log(`Page initialized: ${pageName}`);
@@ -29,100 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
         
         return;
-    }
-    
-    // Home page with preloader
-    if (preloader) {
-        const customCursor = document.getElementById('custom-cursor');
-        
-        // Explicitly position cursor at the center of the screen initially
-        if (customCursor) {
-            customCursor.style.top = '50vh';
-            customCursor.style.left = '50vw';
-        }
-        
-        // Initialize cursor position
-        setTimeout(() => {
-            if (profileGptIcon && customCursor) {
-                updateCursorTarget();
-                
-                // Start cursor animation sequence
-                customCursor.classList.add('visible');
-                
-                setTimeout(() => {
-                    // Start moving cursor with smoother animation
-                    customCursor.classList.add('cursor-animate');
-                    
-                    // After cursor reaches icon, simulate click
-                    setTimeout(() => {
-                        // Add active class to simulate click on ProfileGPT icon
-                        profileGptIcon.classList.add('active', 'click-animation');
-                        
-                        // After click animation, show app window
-                        setTimeout(() => {
-                            appWindow.classList.add('active');
-                            
-                            // Hide cursor after click
-                            customCursor.style.opacity = '0';
-                            
-                            // After window appears, wait a bit then start transitioning to main content
-                            setTimeout(() => {
-                                // Make the app window expand to fill the screen
-                                appWindow.classList.add('fullscreen');
-                                
-                                // After expansion completes, adjust position
-                                setTimeout(() => {
-                                    appWindow.classList.add('fullscreen-complete');
-                                    
-                                    // Show main content inside the window
-                                    setTimeout(() => {
-                                        // Replace window content with main content
-                                        mainContent.style.display = 'block';
-                                        mainContent.style.opacity = '0';
-                                        
-                                        // Remove the loading text and keep only the spinner
-                                        const loadingText = appWindow.querySelector('.loading-indicator p');
-                                        if (loadingText) {
-                                            loadingText.style.display = 'none';
-                                        }
-                                        
-                                        appWindow.querySelector('.window-content').appendChild(mainContent);
-                                        
-                                        setTimeout(() => {
-                                            // Fade in the main content
-                                            mainContent.style.opacity = '1';
-                                            mainContent.style.transition = 'opacity 0.5s ease';
-                                            
-                                            // Hide the loading spinner
-                                            appWindow.querySelector('.loading-indicator').style.display = 'none';
-                                            
-                                            // Initialize the sidebar
-                                            initSidebar();
-                                            
-                                            // Initialize text scramble
-                                            initTextScramble();
-                                            
-                                            // Start message sequence after content appears
-                                            setTimeout(startMessageSequence, 500);
-                                        }, 100);
-                                    }, 100);
-                                }, 500); // Wait for the size transition to complete
-                            }, 3000); // Wait 3 seconds showing the "app loading"
-                        }, 800);
-                    }, 1200);
-                }, 500);
-            }
-        }, 500);
-        
-        // Add click effect for manual clicking
-        if (profileGptIcon) {
-            profileGptIcon.addEventListener('click', function() {
-                this.classList.add('click-animation');
-                setTimeout(() => {
-                    this.classList.remove('click-animation');
-                }, 300);
-            });
-        }
     }
     
     // Initialize AutoAssess demo if on the autoassess page
@@ -297,25 +197,6 @@ function initAutoAssessDemo() {
     }
 }
 
-// Function to get element position
-function getElementPosition(element) {
-    const rect = element.getBoundingClientRect();
-    return {
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2
-    };
-}
-
-// Set cursor animation target (center of ProfileGPT icon)
-function updateCursorTarget() {
-    const profileGptIcon = document.getElementById('profile-gpt');
-    if (profileGptIcon) {
-        const iconPos = getElementPosition(profileGptIcon);
-        document.documentElement.style.setProperty('--cursor-end-x', `${iconPos.x}px`);
-        document.documentElement.style.setProperty('--cursor-end-y', `${iconPos.y}px`);
-    }
-}
-
 // Sidebar Toggle Functionality
 function initSidebar() {
     const closeSidebarBtn = document.getElementById('close-sidebar-btn');
@@ -343,19 +224,7 @@ function initSidebar() {
     }
 }
 
-// Typing animation function - updated to handle multiple typing animations
-/**
- * Enhanced typing animation function - globally usable
- * @param {HTMLElement} element - The element for typing animation
- * @param {Object} options - Configuration options
- * @param {string} options.text - Text to type (or will use data-text attribute)
- * @param {number} options.speed - Typing speed in milliseconds
- * @param {number} options.startDelay - Delay before typing starts
- * @param {boolean} options.cursor - Whether to show cursor
- * @param {string} options.cursorChar - Cursor character
- * @param {Function} options.onComplete - Callback on completion
- * @returns {Promise} - Promise that resolves when animation completes
- */
+// Typing animation function - fixed syntax and simplified
 function typeAnimation(element, options = {}) {
     if (!element) return Promise.resolve();
     
@@ -414,7 +283,7 @@ function typeAnimation(element, options = {}) {
     });
 }
 
-// Utility function to easily apply typing animation to any element
+// Utility function to apply typing animation
 function applyTypingAnimation(selector, options = {}) {
     const elements = document.querySelectorAll(selector);
     const animations = [];
@@ -426,10 +295,16 @@ function applyTypingAnimation(selector, options = {}) {
     return Promise.all(animations);
 }
 
-// Updated message sequence function with delay between user and Edson messages
+// Message sequence function for content pages
 async function startMessageSequence() {
+    console.log("Starting message sequence...");
     const messages = document.querySelectorAll('[data-message-index]');
-    if (!messages || messages.length === 0) return;
+    if (!messages || messages.length === 0) {
+        console.error("No messages found with data-message-index attribute");
+        return;
+    }
+    
+    console.log(`Found ${messages.length} messages to animate`);
     
     // Initially hide ALL messages
     messages.forEach(msg => {
@@ -445,6 +320,7 @@ async function startMessageSequence() {
     for (let i = 0; i < sortedMessages.length; i++) {
         const msg = sortedMessages[i];
         const index = parseInt(msg.dataset.messageIndex);
+        console.log(`Processing message ${index} (${msg.classList})`);
         
         // For user messages
         if (msg.classList.contains('user-message')) {
@@ -452,6 +328,7 @@ async function startMessageSequence() {
                 setTimeout(() => {
                     msg.classList.remove('hidden');
                     msg.classList.add('animate-fadeIn');
+                    console.log(`Showing user message ${index}`);
                     resolve();
                 }, 800);
             });
@@ -465,6 +342,7 @@ async function startMessageSequence() {
                 setTimeout(() => {
                     msg.classList.remove('hidden');
                     msg.classList.add('animate-pulse');
+                    console.log(`Showing thinking message ${index}`);
                     
                     // Show the thinking message for a while before hiding it
                     setTimeout(() => {
@@ -478,11 +356,13 @@ async function startMessageSequence() {
         // For Edson messages
         else if (msg.classList.contains('edson-message')) {
             msg.classList.remove('hidden');
+            console.log(`Showing Edson message ${index}`);
             
             // Check for typing animation
             const typingElement = msg.querySelector('.typing-animation');
             if (typingElement) {
                 // Perform typing animation
+                console.log(`Starting typing animation for message ${index}`);
                 await typeAnimation(typingElement);
                 
                 // Small delay after typing completes
@@ -494,14 +374,20 @@ async function startMessageSequence() {
             }
         }
     }
+    
+    console.log("Message sequence completed");
 }
 
 // Initialize text scramble for page title
 function initTextScramble() {
+    console.log("Initializing text scramble");
     const el = document.querySelector('.text-scramble');
     if (el) {
+        console.log("Text scramble element found, initializing");
         const fx = new TextScramble(el);
         fx.setText(el.getAttribute('data-text') || el.textContent);
+    } else {
+        console.log("No text scramble element found");
     }
 }
 
