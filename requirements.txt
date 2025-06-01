@@ -1,10 +1,2 @@
 flask
 gunicorn
-pandas
-numpy
-joblib
-opencv-python
-tensorflow
-h5py
-scikit-learn
-werkzeug
