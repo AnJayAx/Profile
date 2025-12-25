@@ -906,12 +906,58 @@ body {
 .sidebar {
     width: 260px;
     transition: width 0.3s ease;
+    overflow: hidden;
 }
 
 .sidebar.collapsed .sidebar-content,
 .sidebar.collapsed .sidebar-footer,
 .sidebar.collapsed .new-chat-btn span {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0s 0.2s;
+}
+
+.sidebar-content,
+.sidebar-footer,
+.new-chat-btn span {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease 0.1s, visibility 0s;
+}
+
+.sidebar .chat-item span,
+.sidebar .section-title {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: slideInFromLeft 0.3s ease forwards;
+}
+
+.sidebar.collapsed .chat-item span,
+.sidebar.collapsed .section-title {
+    animation: slideOutToRight 0.2s ease forwards;
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutToRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(20px);
+        opacity: 0;
+    }
 }
 
 .sidebar.collapsed .control-btn {
