@@ -237,6 +237,54 @@ function initSidebar() {
     
     // Theme toggle functionality
     initThemeToggle();
+    
+    // Font size functionality
+    initFontSize();
+}
+
+// Font Size Functionality
+function initFontSize() {
+    const fontSizeBtn = document.querySelector('.font-size-btn');
+    if (!fontSizeBtn) return;
+    
+    const sizes = ['small', 'medium', 'large'];
+    const sizeLabels = {
+        'small': 'Small',
+        'medium': 'Medium',
+        'large': 'Large'
+    };
+    
+    // Check localStorage for font size preference (default: medium)
+    let currentSize = localStorage.getItem('fontSize') || 'medium';
+    
+    // Apply the saved font size
+    document.body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+    document.body.classList.add(`font-size-${currentSize}`);
+    
+    // Update button title
+    fontSizeBtn.title = `Change font size: ${sizeLabels[currentSize]}`;
+    
+    // Add click event listener
+    fontSizeBtn.addEventListener('click', function() {
+        // Get current index
+        const currentIndex = sizes.indexOf(currentSize);
+        
+        // Get next size (cycle back to start if at end)
+        const nextIndex = (currentIndex + 1) % sizes.length;
+        currentSize = sizes[nextIndex];
+        
+        // Remove all font size classes
+        document.body.classList.remove('font-size-small', 'font-size-medium', 'font-size-large');
+        
+        // Add the new font size class
+        document.body.classList.add(`font-size-${currentSize}`);
+        
+        // Save to localStorage
+        localStorage.setItem('fontSize', currentSize);
+        
+        // Update button title
+        this.title = `Change font size: ${sizeLabels[currentSize]}`;
+    });
 }
 
 // Theme Toggle Functionality
