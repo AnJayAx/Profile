@@ -924,7 +924,8 @@ body {
 
 /* Hide specific controls when sidebar is collapsed */
 .sidebar.collapsed .theme-toggle-btn,
-.sidebar.collapsed .font-size-dropdown {
+.sidebar.collapsed .font-size-dropdown,
+.sidebar.collapsed .animation-toggle-btn {
     display: none;
 }
 
