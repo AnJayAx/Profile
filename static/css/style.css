@@ -2644,3 +2644,393 @@ body {
         font-size: 0.9rem;
     }
 }
+
+/* Light Mode Styles */
+body.light-mode {
+    background-color: #f5f5f5;
+    color: #1a1a1a;
+}
+
+body.light-mode .sidebar {
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+}
+
+body.light-mode .sidebar-footer {
+    border-top: 1px solid #e0e0e0;
+}
+
+body.light-mode .chat-item {
+    color: #1a1a1a;
+}
+
+body.light-mode .chat-item.active {
+    background-color: #e8e8e8;
+}
+
+body.light-mode .chat-item:hover:not(.active) {
+    background-color: #f0f0f0;
+}
+
+body.light-mode .section-title {
+    color: #666666;
+}
+
+body.light-mode .new-chat-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    color: #1a1a1a;
+}
+
+body.light-mode .new-chat-btn:hover {
+    background-color: #e8e8e8;
+}
+
+body.light-mode .control-btn {
+    background-color: #f0f0f0;
+    color: #1a1a1a;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .control-btn:hover {
+    background-color: #e0e0e0;
+    color: #0066cc;
+    border-color: #0066cc;
+    box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
+    text-shadow: none;
+}
+
+body.light-mode .chat-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+body.light-mode .text-scramble {
+    color: #1a1a1a;
+}
+
+body.light-mode .text-scramble .dud {
+    color: #0066cc;
+}
+
+body.light-mode .chat-content-container {
+    background-color: #f5f5f5;
+}
+
+body.light-mode .message {
+    color: #1a1a1a;
+}
+
+body.light-mode .user-message {
+    background-color: #e3f2fd;
+    border-color: #90caf9;
+}
+
+body.light-mode .edson-message {
+    background-color: #ffffff;
+    border-color: #e0e0e0;
+}
+
+body.light-mode .thinking-message {
+    background-color: #fff3e0;
+    color: #666666;
+}
+
+body.light-mode .project-detail-content {
+    background-color: #ffffff;
+    color: #1a1a1a;
+}
+
+body.light-mode .project-header {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+body.light-mode .tech-tag {
+    background-color: #e3f2fd;
+    color: #0066cc;
+}
+
+body.light-mode .feature-item {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .feature-icon {
+    background-color: #e3f2fd;
+    color: #0066cc;
+}
+
+body.light-mode .screenshot {
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .screenshot img {
+    border-color: #e0e0e0;
+}
+
+body.light-mode .screenshot:hover img {
+    border-color: #0066cc;
+}
+
+body.light-mode .caption {
+    color: #666666;
+}
+
+body.light-mode .font-option {
+    color: #1a1a1a;
+}
+
+body.light-mode .font-option:hover {
+    background-color: #e8e8e8;
+    color: #0066cc;
+}
+
+body.light-mode .font-size-options {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .image-modal {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+body.light-mode .modal-close {
+    color: #1a1a1a;
+}
+
+body.light-mode .modal-close:hover {
+    color: #0066cc;
+}
+
+body.light-mode .modal-caption {
+    color: #666666;
+}
+
+body.light-mode .project-overview,
+body.light-mode .key-features,
+body.light-mode .tech-stack,
+body.light-mode .project-screenshots,
+body.light-mode .development-process,
+body.light-mode .caduceus-demo {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .project-overview h2,
+body.light-mode .key-features h2,
+body.light-mode .tech-stack h2,
+body.light-mode .project-screenshots h2,
+body.light-mode .development-process h2,
+body.light-mode .caduceus-demo h2 {
+    color: #1a1a1a;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+body.light-mode .project-overview p {
+    color: #333333;
+}
+
+body.light-mode .feature-item {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .feature-item:hover {
+    border-color: #0066cc;
+    box-shadow: 0 5px 15px rgba(0, 102, 204, 0.1);
+}
+
+body.light-mode .feature-icon {
+    background-color: #e3f2fd;
+    color: #0066cc;
+}
+
+body.light-mode .feature-text h3 {
+    color: #1a1a1a;
+}
+
+body.light-mode .feature-text p {
+    color: #666666;
+}
+
+body.light-mode .tech-tag {
+    background-color: #e3f2fd;
+    color: #0066cc;
+    border: 1px solid #90caf9;
+}
+
+body.light-mode .tech-tag:hover {
+    background-color: #0066cc;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 102, 204, 0.2);
+}
+
+body.light-mode .project-logo {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .project-title-area h1 {
+    color: #1a1a1a;
+}
+
+body.light-mode .project-tagline {
+    color: #0066cc;
+}
+
+body.light-mode .symptom-selector,
+body.light-mode .diagnosis-area,
+body.light-mode .image-upload-area,
+body.light-mode .acne-results-area,
+body.light-mode .results-panel {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .symptom-selector h3,
+body.light-mode .diagnosis-area h3,
+body.light-mode .image-upload-area h3,
+body.light-mode .acne-results-area h3,
+body.light-mode .diagnosis-summary h3 {
+    color: #1a1a1a;
+    border-bottom-color: #e0e0e0;
+}
+
+body.light-mode .search-box input {
+    background-color: #f5f5f5;
+    border: 1px solid #d0d0d0;
+    color: #1a1a1a;
+}
+
+body.light-mode .search-box input::placeholder {
+    color: #999999;
+}
+
+body.light-mode .search-icon {
+    color: #666666;
+}
+
+body.light-mode .symptom-item {
+    border-bottom: 1px solid #e0e0e0;
+    color: #1a1a1a;
+}
+
+body.light-mode .symptom-checkbox {
+    border-color: #999999;
+}
+
+body.light-mode .symptom-checkbox:checked {
+    background-color: #0066cc;
+    border-color: #0066cc;
+}
+
+body.light-mode .diagnose-btn {
+    background-color: #0066cc;
+}
+
+body.light-mode .diagnose-btn:hover {
+    background-color: #0052a3;
+    box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
+}
+
+body.light-mode .results-panel {
+    background-color: #f9f9f9;
+    color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .diagnosis-label {
+    color: #666666;
+}
+
+body.light-mode .diagnosis-value {
+    color: #0066cc;
+}
+
+body.light-mode .model-predictions h4 {
+    color: #666666;
+}
+
+body.light-mode .disclaimer {
+    border-top: 1px solid #e0e0e0;
+    color: #666666;
+}
+
+body.light-mode .upload-box {
+    border-color: #d0d0d0;
+    background-color: #f9f9f9;
+}
+
+body.light-mode .upload-box:hover {
+    border-color: #0066cc;
+    background-color: rgba(0, 102, 204, 0.05);
+}
+
+body.light-mode .upload-box.drag-over {
+    border-color: #0066cc;
+    background-color: rgba(0, 102, 204, 0.1);
+}
+
+body.light-mode .upload-placeholder {
+    color: #666666;
+}
+
+body.light-mode .analyze-btn,
+body.light-mode .reset-btn {
+    background-color: #0066cc;
+}
+
+body.light-mode .analyze-btn:hover,
+body.light-mode .reset-btn:hover {
+    background-color: #0052a3;
+}
+
+body.light-mode .reset-btn {
+    background-color: #999999;
+}
+
+body.light-mode .reset-btn:hover {
+    background-color: #777777;
+}
+
+body.light-mode .acne-results {
+    color: #1a1a1a;
+}
+
+body.light-mode .result-item {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+}
+
+body.light-mode .empty-state-message {
+    color: #999999;
+}
+
+body.light-mode .empty-state-icon {
+    color: #cccccc;
+}
+
+body.light-mode .window-header {
+    background-color: #e8e8e8;
+}
+
+body.light-mode ::-webkit-scrollbar {
+    background-color: #f5f5f5;
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+    background-color: #0066cc;
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
+}
+
+body.light-mode * {
+    scrollbar-color: #c0c0c0 #f5f5f5;
+}

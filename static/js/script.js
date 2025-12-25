@@ -234,6 +234,54 @@ function initSidebar() {
     
     // Animation toggle functionality
     initAnimationToggle();
+    
+    // Theme toggle functionality
+    initThemeToggle();
+}
+
+// Theme Toggle Functionality
+function initThemeToggle() {
+    const themeToggleBtn = document.querySelector('.theme-toggle-btn');
+    if (!themeToggleBtn) return;
+    
+    // Check localStorage for theme preference (default: dark)
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    
+    // Apply the saved theme
+    if (currentTheme === 'light') {
+        document.body.classList.add('light-mode');
+    }
+    
+    // Update button icon based on current theme
+    updateThemeToggleButton(themeToggleBtn, currentTheme);
+    
+    // Add click event listener
+    themeToggleBtn.addEventListener('click', function() {
+        const isDarkMode = !document.body.classList.contains('light-mode');
+        
+        if (isDarkMode) {
+            // Switch to light mode
+            document.body.classList.add('light-mode');
+            localStorage.setItem('theme', 'light');
+            updateThemeToggleButton(themeToggleBtn, 'light');
+        } else {
+            // Switch to dark mode
+            document.body.classList.remove('light-mode');
+            localStorage.setItem('theme', 'dark');
+            updateThemeToggleButton(themeToggleBtn, 'dark');
+        }
+    });
+}
+
+function updateThemeToggleButton(button, theme) {
+    const icon = button.querySelector('i');
+    if (theme === 'light') {
+        icon.className = 'fas fa-sun';
+        button.title = 'Switch to dark mode';
+    } else {
+        icon.className = 'fas fa-moon';
+        button.title = 'Switch to light mode';
+    }
 }
 
 // Animation Toggle Functionality
