@@ -964,6 +964,19 @@ body {
     text-shadow: 0 0 5px #ffff00;
 }
 
+/* Animation toggle button states */
+.animation-toggle-btn.animations-disabled i {
+    color: #ff4444;
+}
+
+.animation-toggle-btn.animations-disabled i::before {
+    content: "\f04d"; /* fa-stop icon */
+}
+
+.animation-toggle-btn:hover {
+    background-color: #252525;
+}
+
 /* Font size dropdown styling */
 .font-size-dropdown {
     position: relative;

@@ -17,10 +17,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize sidebar toggle functionality
         initSidebar();
         
-        // Start message sequence with a delay
-        setTimeout(() => {
-            startMessageSequence();
-        }, 500);
+        // Check if animations are enabled
+        const animationsEnabled = areAnimationsEnabled();
+        console.log("Animations enabled:", animationsEnabled);
+        
+        if (animationsEnabled) {
+            // Start message sequence with a delay
+            setTimeout(() => {
+                startMessageSequence();
+            }, 500);
+        } else {
+            // Show all messages immediately without animation
+            showAllMessagesInstantly();
+        }
         
         return;
     }
@@ -222,7 +231,56 @@ function initSidebar() {
             }
         });
     }
+    
+    // Animation toggle functionality
+    initAnimationToggle();
 }
+
+// Animation Toggle Functionality
+function initAnimationToggle() {
+    const animationToggleBtn = document.querySelector('.animation-toggle-btn');
+    if (!animationToggleBtn) return;
+    
+    // Check localStorage for animation preference (default: true/enabled)
+    const animationsEnabled = localStorage.getItem('animationsEnabled') !== 'false';
+    
+    // Update button appearance based on current state
+    updateAnimationToggleButton(animationToggleBtn, animationsEnabled);
+    
+    // Add click event listener
+    animationToggleBtn.addEventListener('click', function() {
+        const currentState = localStorage.getItem('animationsEnabled') !== 'false';
+        const newState = !currentState;
+        
+        // Save to localStorage
+        localStorage.setItem('animationsEnabled', newState);
+        
+        // Update button appearance
+        updateAnimationToggleButton(animationToggleBtn, newState);
+        
+        // If we're on the home page and animations are disabled, redirect to /about
+        if (!newState && window.location.pathname === '/') {
+            window.location.href = '/about';
+        }
+    });
+}
+
+function updateAnimationToggleButton(button, enabled) {
+    if (enabled) {
+        button.classList.remove('animations-disabled');
+        button.title = 'Disable animations';
+        button.querySelector('i').className = 'fas fa-play-circle';
+    } else {
+        button.classList.add('animations-disabled');
+        button.title = 'Enable animations';
+        button.querySelector('i').className = 'fas fa-stop-circle';
+    }
+}
+
+function areAnimationsEnabled() {
+    return localStorage.getItem('animationsEnabled') !== 'false';
+}
+
 
 // Typing animation function - fixed syntax and simplified
 function typeAnimation(element, options = {}) {
@@ -376,6 +434,42 @@ async function startMessageSequence() {
     }
     
     console.log("Message sequence completed");
+}
+
+// Show all messages instantly without animation
+function showAllMessagesInstantly() {
+    console.log("Showing all messages instantly (animations disabled)");
+    const messages = document.querySelectorAll('[data-message-index]');
+    if (!messages || messages.length === 0) {
+        console.error("No messages found with data-message-index attribute");
+        return;
+    }
+    
+    // Get all messages and sort them by index
+    const sortedMessages = Array.from(messages).sort((a, b) => {
+        return parseInt(a.dataset.messageIndex) - parseInt(b.dataset.messageIndex);
+    });
+    
+    // Show all messages instantly
+    sortedMessages.forEach(msg => {
+        // Skip thinking messages entirely
+        if (msg.classList.contains('thinking-message')) {
+            return;
+        }
+        
+        msg.classList.remove('hidden');
+        
+        // For typing animation elements, show full text immediately
+        const typingElement = msg.querySelector('.typing-animation');
+        if (typingElement) {
+            const fullText = typingElement.getAttribute('data-text');
+            if (fullText) {
+                typingElement.textContent = fullText;
+            }
+        }
+    });
+    
+    console.log("All messages displayed instantly");
 }
 
 // Initialize text scramble for page title

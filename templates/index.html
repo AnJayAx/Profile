@@ -124,6 +124,14 @@
 
 <!-- Animation-specific JavaScript -->
 <script>
+    // Check if animations are disabled and redirect immediately
+    if (localStorage.getItem('animationsEnabled') === 'false') {
+        console.log("Animations disabled, redirecting to /about");
+        window.location.href = '/about';
+        // Prevent rest of script from executing
+        throw new Error('Redirecting to /about');
+    }
+    
     // Function to get element position
     function getElementPosition(element) {
         const rect = element.getBoundingClientRect();
