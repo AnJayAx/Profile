@@ -96,17 +96,17 @@
                             </div>
                             <div class="screenshot">
                                 <img src="{{ url_for('static', filename='media/projects/autoassess/main_page.png') }}"
-                                    alt="Main page">
+                                    alt="Main page" class="clickable-image">
                                 <p class="caption">Main page</p>
                             </div>
                             <div class="screenshot">
                                 <img src="{{ url_for('static', filename='media/projects/autoassess/report_page.png') }}"
-                                    alt="Report page">
+                                    alt="Report page" class="clickable-image">
                                 <p class="caption">Report page</p>
                             </div>
                             <div class="screenshot">
                                 <img src="{{ url_for('static', filename='media/projects/autoassess/export_report.png') }}"
-                                    alt="Exported">
+                                    alt="Exported" class="clickable-image">
                                 <p class="caption">Exported Report</p>
                             </div>
                         </div>
@@ -115,5 +115,12 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="modalCaption" class="modal-caption"></div>
 </div>
 {% endblock %}

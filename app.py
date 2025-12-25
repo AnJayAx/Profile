@@ -79,5 +79,9 @@ def autoassess():
 def gradescopev2():
     return render_template('gradescopev2.html', page_title="GRADESCOPEV2", active_page="gradescopev2")
 
+@app.route('/monuai')
+def monuai():
+    return render_template('monuai.html', page_title="MONUAI", active_page="monuai")
+
 if __name__ == '__main__':
     app.run(debug=True)

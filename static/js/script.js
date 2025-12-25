@@ -452,3 +452,53 @@ class TextScramble {
 // Attach to window for global use
 window.typeAnimation = typeAnimation;
 window.applyTypingAnimation = applyTypingAnimation;
+
+// Image Modal Functionality
+function initImageModal() {
+    const modal = document.getElementById('imageModal');
+    if (!modal) return;
+    
+    const modalImg = document.getElementById('modalImage');
+    const captionText = document.getElementById('modalCaption');
+    const closeBtn = document.querySelector('.modal-close');
+    
+    // Add click event to all clickable images
+    const clickableImages = document.querySelectorAll('.clickable-image');
+    clickableImages.forEach(img => {
+        img.addEventListener('click', function() {
+            modal.style.display = 'block';
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        });
+    });
+    
+    // Close modal when clicking the X button
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    }
+    
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// Initialize image modal after messages are shown
+document.addEventListener('DOMContentLoaded', function() {
+    // Existing initialization code...
+    // Add a delay to ensure images are loaded
+    setTimeout(() => {
+        initImageModal();
+    }, 1000);
+});

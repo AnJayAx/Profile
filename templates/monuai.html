@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}AUTOASSESS{% endblock %}
+
+{% block content %}
+<div class="chat-header">
+    <div class="text-scramble" data-text="MONUAI">MONUAI</div>
+</div>
+<div class="chat-content-container">
+    <div class="chat-messages-wrapper">
+        <div class="chat-messages">
+            <!-- Add an animation of adding a folder -->
+
+            <div class="message user-message hidden" data-message-index="0">Take a look at this project folder, what
+                does it do?</div>
+            <div class="thinking-message hidden" data-message-index="1">Analyzing ...</div>
+            <div class="message edson-message hidden" data-message-index="2">
+                <p class="typing-animation"
+                    data-text="I have analyzed the project folder and it seems to be a landmark recognition system project designed for locals and tourists, I will compile a summary of it for you.">
+                </p>
+            </div>
+            <div class="message edson-message wide-content hidden" data-message-index="3">
+                <div class="project-detail-content">
+                    <div class="project-header">
+                        <img src="{{ url_for('static', filename='media/projects/monuai/MonuAI_Logo.png') }}"
+                            alt="MonuAI Logo" class="project-logo">
+                        <div class="project-title-area">
+                            <h1>MonuAI</h1>
+                            <p class="project-tagline">Landmark Recognition AI on Android</p>
+                        </div>
+                    </div>
+
+                    <div class="project-overview">
+                        <h2>Project Overview</h2>
+                        <p>MonuAI is a landmark recognition AI assistant designed to help locals and tourists easily identify landmarks and instantly access relevant 
+                            information about them, reducing the need for a physical tour guide and preventing missed opportunities to appreciate important sites. 
+                            Built as a university project for a computer vision module, it focuses on solving a common tourism challenge: visitors often encounter iconic locations without clear, 
+                            contextual information about their history, significance, or nearby points of interest. MonuAI was originally designed for emerging smart glasses, 
+                            enabling a hands-free experience where users simply look at a landmark to receive on-the-spot insights, 
+                            but it was later integrated into a mobile phone app to simulate a compact wearable device. The system is implemented using Flutter on Android, 
+                            with the landmark recognition model running fully on-device, allowing for fast responses and offline-friendly usage while showcasing practical, 
+                            real-world deployment of computer vision in an accessible application.
+                        </p>
+                    </div>
+
+                    <div class="key-features">
+                        <h2>My Key Features</h2>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                                <div class="feature-text">
+                                    <h3>Model Distillation</h3>
+                                    <p>Train data with larger model (YOLOv11m) and distill knowledge to smaller model (YOLOv11n) for on-device use</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-history"></i></div>
+                                <div class="feature-text">
+                                    <h3>Live detection</h3>
+                                    <p>Using phone camera to detect landmarks with bounding box, labels and information in real-time</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-notes-medical"></i></div>
+                                <div class="feature-text">
+                                    <h3>Points/Reward System</h3>
+                                    <p>Incentivizes user engagement through a points and rewards mechanism</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                                <div class="feature-text">
+                                    <h3>Offline on-device AI</h3>
+                                    <p>MonuAI runs the landmark recognition model fully on-device, enabling fast responses and offline-friendly usage.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-stack">
+                        <h2>Technologies Used</h2>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Scikit-learn</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">HTML/CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+
+                    <div class="project-screenshots">
+                        <h2>Screenshots</h2>
+                        <div class="screenshot-carousel">
+                            <div class="screenshot">
+                                <video controls width="100%">
+                                    <source src="{{ url_for('static', filename='media/projects/monuai/MonuAI_Demo.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="caption">MonuAI Demo</p>
+                            </div>
+                            <div class="screenshot">
+                                <video controls width="100%">
+                                    <source src="{{ url_for('static', filename='media/projects/monuai/Grad-CAM.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="caption">Grad-CAM Demo</p>
+                            </div>
+                            <div class="screenshot">
+                                <img src="{{ url_for('static', filename='media/projects/monuai/Model_Approach.png') }}"
+                                    alt="Model Approach" class="clickable-image">
+                                <p class="caption">Model Approach</p>
+                            </div>
+                            <div class="screenshot">
+                                <img src="{{ url_for('static', filename='media/projects/monuai/Phone_Demo.jpg') }}"
+                                    alt="Phone Demo" class="clickable-image">
+                                <p class="caption">Phone Demo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="modalCaption" class="modal-caption"></div>
+</div>
+{% endblock %}

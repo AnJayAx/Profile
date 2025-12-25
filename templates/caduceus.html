@@ -96,27 +96,27 @@
                         <div class="screenshot-carousel">
                             <div class="screenshot">
                                 <img src="{{ url_for('static', filename='media/projects/caduceus/symptom_analyzer.gif') }}"
-                                    alt="Symptom Analyzer">
+                                    alt="Symptom Analyzer" class="clickable-image">
                                 <p class="caption">Symptom Analyzer</p>
                             </div>
                             <div class="screenshot">
                                 <img src="{{ url_for('static', filename='media/projects/caduceus/acne_detection.gif') }}"
-                                    alt="Acne Detection">
+                                    alt="Acne Detection" class="clickable-image">
                                 <p class="caption">Acne Detection</p>
                             </div>
                             <div class="screenshot">
                                 <img src="{{ url_for('static', filename='media/projects/caduceus/paypal_paywall_verification.gif') }}"
-                                    alt="Verification Paywall">
+                                    alt="Verification Paywall" class="clickable-image">
                                 <p class="caption">Verification paywall with Paypal</p>
                             </div>
                             <div class="screenshot">
                                 <img src="{{ url_for('static', filename='media/projects/caduceus/symptom_analyzer_dashboard.png') }}"
-                                    alt="Symptom Analyzer Dashboard">
+                                    alt="Symptom Analyzer Dashboard" class="clickable-image">
                                 <p class="caption">Symptom Analyzer dashboard</p>
                             </div>
                             <div class="screenshot">
                                 <img src="{{ url_for('static', filename='media/projects/caduceus/symptom_analyzer_records.png') }}"
-                                    alt="Patient Record">
+                                    alt="Patient Record" class="clickable-image">
                                 <p class="caption">Patient record view</p>
                             </div>
                         </div>
@@ -1246,4 +1246,11 @@
         }, true);
     });
 </script>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="modalCaption" class="modal-caption"></div>
+</div>
 {% endblock %}
